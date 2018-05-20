@@ -1,16 +1,19 @@
 .sidebar {
-  background-color: blueviolet;
   flex: 1 0;
   padding: 1vw;
 }
 
-ul {
+.sidebar > ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-li {
+.sidebar > li {
   margin: 0;
   padding: 0;
+}
+
+.sidebar > a {
+  
 }
