@@ -28,11 +28,11 @@ const ROUTES = [
 export default class App extends Component {
   render() {
     return (
-      <div className="app">
+      <div className="App">
         <Header />
-        <div className="body">
+        <div className="App_body">
           <Sidebar routes={ROUTES} />
-          <div className="content">
+          <div className="App_content">
             { ROUTES.map(route => (
               <Route
                 key={route.menu}

@@ -1,19 +1,35 @@
-.sidebar {
+.Sidebar {
   flex: 1 0;
   padding: 1vw;
 }
 
-.sidebar > ul {
+.Sidebar ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.sidebar > li {
+.Sidebar li {
   margin: 0;
-  padding: 0;
+  border: 1px solid #0E4A70;
+  border-width: 1px 1px 0 1px;
+  box-sizing: border-box;
 }
 
-.sidebar > a {
-  
+.Sidebar_li:last-of-type {
+  border-width: 1px;
+}
+
+.Sidebar_navlink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  padding: 10px;
+  color: #0E4A70;
+  background-color: #FCF7F6;
+}
+
+.Sidebar_li > .Sidebar_selected {
+  background-color: #0E4A70;
+  color: #FCF7F6;
 }

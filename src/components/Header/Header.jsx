@@ -5,8 +5,8 @@ import './Header.css';
 export default class Header extends Component {
   render() {
     return (
-      <div className="header">
-        <img src={logo} className="logo" alt="logo" />
+      <div className="Header">
+        <img src={logo} className="Header_logo" alt="logo" />
       </div>
     )
   }

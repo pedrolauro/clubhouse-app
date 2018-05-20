@@ -1,4 +1,4 @@
-.app {
+.App {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -9,7 +9,7 @@
   justify-content: stretch;
 }
 
-.body {
+.App_body {
   flex: 0 0;
   height: calc(100vh - 80px);
   display: flex;
@@ -19,11 +19,7 @@
   justify-content: stretch;
 }
 
-.content {
+.App_content {
   padding: 1vw;
   flex: 10 0;
-}
-
-.app-intro {
-  font-size: large;
 }

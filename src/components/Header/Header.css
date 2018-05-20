@@ -1,18 +1,15 @@
-.logo {
-  animation: logo-spin infinite 20s linear;
-  height: 50px;
-}
-
-.header {
-  /* flex: 0 0 20vh; */
+.Header {
   flex: 0 0;
   height: 80px;
-  /* max-height: 80px; */
   box-sizing: border-box;
   background-color: #222;
   padding: 2vw;
 }
 
+.Header_logo {
+  animation: logo-spin infinite 20s linear;
+  height: 50px;
+}
 @keyframes logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
