@@ -1,0 +1,29 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  align-content: stretch;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.body {
+  flex: 0 0;
+  height: calc(100vh - 80px);
+  display: flex;
+  box-sizing: border-box;
+  align-content: stretch;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.content {
+  padding: 1vw;
+  flex: 10 0;
+}
+
+.app-intro {
+  font-size: large;
+}
