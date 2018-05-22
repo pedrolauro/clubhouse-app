@@ -1,6 +1,5 @@
 .App {
   display: flex;
-  flex-direction: column;
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -11,7 +10,6 @@
 
 .App_body {
   flex: 0 0;
-  height: calc(100vh - 80px);
   display: flex;
   box-sizing: border-box;
   align-content: stretch;
@@ -20,6 +18,28 @@
 }
 
 .App_content {
-  padding: 1vw;
+  padding: 20px;
   flex: 10 0;
+  overflow-y: auto;
+}
+
+.App_column {
+  box-sizing: border-box;
+  height: 100vh;  /*allows both columns to span the full height of the browser window*/
+  display: flex;
+  flex-direction: column;  /*places the left and right headers above the bottom content*/
+}
+
+#left {
+  flex: 0 0 100px;
+  /* flex-shrink: 0;  makes sure that content is not cut off in a smaller browser window */
+}
+
+#right {
+  flex: 1 0;
+}
+
+.bottom {
+  flex-grow: 1;  /*ensures that the container will take up the full height of the parent container*/
+  overflow-y: auto;  /*adds scroll to this container*/
 }

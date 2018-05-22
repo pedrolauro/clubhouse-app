@@ -1,35 +1,30 @@
 .Sidebar {
   flex: 1 0;
-  padding: 1vw;
+  background-color: #22272A;
 }
 
-.Sidebar ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.Sidebar li {
-  margin: 0;
-  border: 1px solid #0E4A70;
-  border-width: 1px 1px 0 1px;
-  box-sizing: border-box;
-}
-
-.Sidebar_li:last-of-type {
-  border-width: 1px;
+.Sidebar_header {
+  text-transform: uppercase;
+  text-align: center;
+  color: #F5FDFD;
 }
 
 .Sidebar_navlink {
+  margin: 10px 0;
   display: block;
+  padding: 10px 20px 10px 20px;
+  font-size: 14px;
   text-decoration: none;
+  text-transform: uppercase;
   color: inherit;
-  padding: 10px;
-  color: #0E4A70;
-  background-color: #FCF7F6;
+  border: 0 solid #22272A;
+  border-left-width: 3px;
+  background-color: #22272A;
+  color: #F5FDFD;
 }
 
-.Sidebar_li > .Sidebar_selected {
-  background-color: #0E4A70;
-  color: #FCF7F6;
+.Sidebar_navlink.Sidebar_selected {
+  color: #0CD19C;
+  border-color: #0CD19C;
+  background-color: #363A3D;
 }

@@ -1,16 +1,10 @@
 .Header {
-  flex: 0 0;
-  height: 80px;
+  flex: 0 0 60px;
   box-sizing: border-box;
-  background-color: #222;
-  padding: 2vw;
-}
-
-.Header_logo {
-  animation: logo-spin infinite 20s linear;
-  height: 50px;
-}
-@keyframes logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  background-color: #374366;
+  padding: 10px;
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: white;
 }

@@ -5,25 +5,25 @@ import './Sidebar.css'
 
 export default class Sidebar extends Component {
   buildNavLinks = routes => routes.map(route => (
-    <li key={route.menu} className="Sidebar_li">
-      <NavLink
-        exact={route.exact}
-        to={route.path}
-        className="Sidebar_navlink"
-        activeClassName="Sidebar_selected"
-      >
-        {route.menu}
-      </NavLink>
-    </li>
+    <NavLink
+      key={route.menu}
+      exact={route.exact}
+      to={route.path}
+      className="Sidebar_navlink"
+      activeClassName="Sidebar_selected"
+    >
+      {route.menu}
+    </NavLink>
   ))
 
   render() {
     const { routes } = this.props
     return (
       <div className="Sidebar">
-        <ul className="Sidebar_ul">
-          { this.buildNavLinks(routes) }
-        </ul>
+        <h4 className="Sidebar_header">
+          Regatta Planner
+        </h4>
+        { this.buildNavLinks(routes) }
       </div>
     )
   }

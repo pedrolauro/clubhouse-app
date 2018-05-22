@@ -1,0 +1,18 @@
+.SideHeader {
+  flex: 0 0 60px;
+  box-sizing: border-box;
+  background-color: #374366;
+  padding: 2vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.SideHeader_logo {
+  animation: logo-spin infinite 20s linear;
+  height: 30px;
+}
+@keyframes logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
