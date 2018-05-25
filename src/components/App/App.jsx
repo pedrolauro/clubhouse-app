@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Route } from 'react-router-dom'
-import './App.css';
+import injectSheet from 'react-jss'
 import Header from './../Header/Header'
 import Sidebar from './../Sidebar/Sidebar'
 import SideHeader from './../SideHeader/SideHeader'
@@ -26,28 +26,58 @@ const ROUTES = [
     main: () => <Categorias />,
   },
 ]
-export default class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <div id="left" className="App_column">
-          <SideHeader />
-          <Sidebar routes={ROUTES} />
-        </div>
-        <div id="right" className="App_column">
-          <Header />
-          <div className="App_content">
-            { ROUTES.map(route => (
-              <Route
-                key={route.menu}
-                path={route.path}
-                exact={route.exact}
-                component={route.main}
-              />
-            ))}
-          </div>
-        </div>
+
+const styles = () => ({
+  body: {
+    display: 'flex',
+    boxSizing: 'border-box',
+    padding: '0',
+    margin: '0',
+    alignContent: 'stretch',
+    alignItems: 'stretch',
+    justifyContent: 'stretch',
+  },
+  column: {
+    boxSizing: 'border-box',
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  left: {
+    extend: 'column',
+    flex: '0 0 100px',
+  },
+  right: {
+    extend: 'column',
+    flex: '1 0',
+  },
+  content: {
+    padding: '20px',
+    flex: '10 0',
+    'overflow-y': 'auto',
+  },
+})
+
+const App = ({ classes }) => (
+  <div className={classes.body}>
+    <div className={classes.left}>
+      <SideHeader />
+      <Sidebar routes={ROUTES} />
+    </div>
+    <div className={classes.right}>
+      <Header />
+      <div className={classes.content}>
+        { ROUTES.map(route => (
+          <Route
+            key={route.menu}
+            path={route.path}
+            exact={route.exact}
+            component={route.main}
+          />
+        ))}
       </div>
-    )
-  }
-}
+    </div>
+  </div>
+)
+
+export default injectSheet(styles)(App)
