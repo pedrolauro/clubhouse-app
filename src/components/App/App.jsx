@@ -28,7 +28,7 @@ const ROUTES = [
 ]
 
 const styles = () => ({
-  body: {
+  container: {
     display: 'flex',
     boxSizing: 'border-box',
     padding: '0',
@@ -59,7 +59,7 @@ const styles = () => ({
 })
 
 const App = ({ classes }) => (
-  <div className={classes.body}>
+  <div className={classes.container}>
     <div className={classes.left}>
       <SideHeader />
       <Sidebar routes={ROUTES} />

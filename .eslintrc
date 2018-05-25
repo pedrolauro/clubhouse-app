@@ -6,7 +6,6 @@
     "jsx-a11y/anchor-is-valid": 0,
     "react/jsx-filename-extension": 0,
     "no-undef": 0,
-    "react/prefer-stateless-function": 0,
     "no-plusplus": 0,
     "react/prop-types": 0
   }

@@ -6,22 +6,13 @@ import { Provider } from 'react-redux'
 import createHistory from 'history/createBrowserHistory'
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
 import { ThemeProvider } from 'react-jss'
+import theme from './theme'
 
 import App from './components/App/App'
 import reducers from './reducers'
 
 const history = createHistory()
 const store = createStore(reducers, applyMiddleware(routerMiddleware(history), logger))
-
-const theme = {
-  colors: {
-    blue: '#374366',
-    dark: '#22272A',
-    green: '#0CD19C',
-    white: '#F5FDFD',
-    'blue-light': '#5774B6',
-  },
-}
 
 // Now you can dispatch navigation actions from anywhere!
 // import { push } from 'react-router-redux'

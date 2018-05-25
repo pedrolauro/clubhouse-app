@@ -1,12 +1,7 @@
-import React, { Component } from 'react';
-import './Categorias.css';
+import React from 'react';
 
-export default class Categorias extends Component {
-  render() {
-    return (
-      <div className="Categorias">
-        <h2>Categorias</h2>
-      </div>
-    )
-  }
-}
+export default () => (
+  <div>
+    <h2>Categorias</h2>
+  </div>
+)
