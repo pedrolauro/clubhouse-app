@@ -8,12 +8,13 @@ const styles = theme => ({
     backgroundColor: theme.colors.white,
     zIndex: 1,
     boxShadow: '0 0 25px 7px rgba(0,0,0,.04)',
+    paddingTop: '30px',
   },
-  header: {
-    textTransform: 'uppercase',
-    textAlign: 'center',
-    color: theme.colors.lightDark,
-  },
+  // header: {
+  //   textTransform: 'uppercase',
+  //   textAlign: 'center',
+  //   color: theme.colors.lightDark,
+  // },
   navlink: {
     margin: '10px 0',
     display: 'block',
@@ -22,7 +23,7 @@ const styles = theme => ({
     textDecoration: 'none',
     textTransform: 'uppercase',
     border: `0 solid ${theme.colors.white}`,
-    borderLeftWidth: '3px',
+    borderLeftWidth: '4px',
     backgroundColor: theme.colors.white,
     color: theme.colors.lightDark,
   },
@@ -35,9 +36,9 @@ const styles = theme => ({
 
 const Sidebar = ({ routes, classes }) => (
   <div className={classes.container}>
-    <h4 className={classes.header}>
+    {/* <h4 className={classes.header}>
       Regatta Planner
-    </h4>
+    </h4> */}
     { routes.map(route => (
       <NavLink
         key={route.menu}

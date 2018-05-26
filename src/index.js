@@ -6,10 +6,15 @@ import { Provider } from 'react-redux'
 import createHistory from 'history/createBrowserHistory'
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
 import { ThemeProvider } from 'react-jss'
-import theme from './theme'
+import jss from 'jss'
+import preset from 'jss-preset-default'
 
 import App from './components/App/App'
 import reducers from './reducers'
+import { theme, globalStyles } from './styles'
+
+jss.setup(preset())
+jss.createStyleSheet(globalStyles).attach()
 
 const history = createHistory()
 const store = createStore(reducers, applyMiddleware(routerMiddleware(history), logger))
