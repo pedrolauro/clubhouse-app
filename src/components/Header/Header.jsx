@@ -5,12 +5,14 @@ const styles = theme => ({
   container: {
     flex: `0 0 ${theme.sizes.header}`,
     boxSizing: 'border-box',
-    backgroundColor: theme.colors.blue,
+    backgroundColor: theme.colors.white,
     padding: '10px',
     display: 'inline-flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    color: theme.colors.white,
+    zIndex: 2,
+    color: theme.colors.lightDark,
+    boxShadow: '0 0 25px 7px rgba(0,0,0,.04)',
   },
 })
 

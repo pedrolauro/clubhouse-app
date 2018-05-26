@@ -5,12 +5,14 @@ import injectSheet from 'react-jss'
 const styles = theme => ({
   container: {
     flex: '1 0',
-    backgroundColor: theme.colors.dark,
+    backgroundColor: theme.colors.white,
+    zIndex: 1,
+    boxShadow: '0 0 25px 7px rgba(0,0,0,.04)',
   },
   header: {
     textTransform: 'uppercase',
     textAlign: 'center',
-    color: theme.colors.white,
+    color: theme.colors.lightDark,
   },
   navlink: {
     margin: '10px 0',
@@ -19,16 +21,15 @@ const styles = theme => ({
     fontSize: '14px',
     textDecoration: 'none',
     textTransform: 'uppercase',
-    border: `0 solid ${theme.colors.dark}`,
+    border: `0 solid ${theme.colors.white}`,
     borderLeftWidth: '3px',
-    backgroundColor: theme.colors.dark,
-    color: theme.colors.white,
+    backgroundColor: theme.colors.white,
+    color: theme.colors.lightDark,
   },
   navlinkActive: {
     extend: 'navlink',
     color: theme.colors.green,
     borderColor: theme.colors.green,
-    backgroundColor: theme.colors.lightDark,
   },
 })
 

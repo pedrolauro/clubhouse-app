@@ -2,13 +2,14 @@ export default {
   colors: {
     blue: '#374366',
     dark: '#22272A',
-    lightDark: '#363A3D',
+    lightDark: '#757575',
     green: '#0CD19C',
-    white: '#F5FDFD',
+    white: '#ffffff',
+    white2: '#f6f7fb',
     'blue-light': '#5774B6',
   },
   sizes: {
-    header: '60px',
+    header: '50px',
     logo: '30px',
   },
 }

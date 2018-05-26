@@ -27,7 +27,7 @@ const ROUTES = [
   },
 ]
 
-const styles = () => ({
+const styles = theme => ({
   container: {
     display: 'flex',
     boxSizing: 'border-box',
@@ -36,6 +36,7 @@ const styles = () => ({
     alignContent: 'stretch',
     alignItems: 'stretch',
     justifyContent: 'stretch',
+    color: theme.colors.lightDark,
   },
   column: {
     boxSizing: 'border-box',
@@ -54,6 +55,7 @@ const styles = () => ({
   content: {
     padding: '20px',
     flex: '10 0',
+    backgroundColor: theme.colors.white2,
     'overflow-y': 'auto',
   },
 })

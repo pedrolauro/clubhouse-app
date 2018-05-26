@@ -6,11 +6,11 @@ const styles = theme => ({
   container: {
     flex: `0 0 ${theme.sizes.header}`,
     boxSizing: 'border-box',
-    backgroundColor: theme.colors.blue,
-    padding: '2vw',
+    backgroundColor: theme.colors.white,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    zIndex: 3,
   },
   '@keyframes SideHeader-logo-spin': {
     from: { transform: 'rotate(0deg)' },
