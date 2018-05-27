@@ -9,9 +9,9 @@ export const theme = {
     'blue-light': '#5774B6',
   },
   sizes: {
-    header: '80px',
-    logo: '70px',
-    sidebar: '160px',
+    header: '70px',
+    logo: '40px',
+    sidebar: '90px',
   },
   unit: {
     padding: 5,
@@ -23,6 +23,7 @@ export const globalStyles = {
     margin: '0',
     padding: '0',
     fontFamily: 'sans-serif',
+    fontSize: '14px',
     color: theme.colors.lightDark,
     overflow: 'hidden',
     boxSizing: 'border-box',

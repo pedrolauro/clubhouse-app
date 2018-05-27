@@ -3,28 +3,6 @@ import { Route } from 'react-router-dom'
 import injectSheet from 'react-jss'
 import Header from './../Header/Header'
 import Sidebar from './../Sidebar/Sidebar'
-import Dashboard from './../Dashboard/Dashboard'
-import Alunos from './../Alunos/Alunos'
-import Categorias from './../Categorias/Categorias'
-
-const ROUTES = [
-  {
-    menu: 'Dashboard',
-    path: '/',
-    exact: true,
-    main: () => <Dashboard />,
-  },
-  {
-    menu: 'Alunos',
-    path: '/alunos',
-    main: () => <Alunos />,
-  },
-  {
-    menu: 'Categorias',
-    path: '/categorias',
-    main: () => <Categorias />,
-  },
-]
 
 const styles = theme => ({
   container: {
@@ -50,18 +28,18 @@ const styles = theme => ({
   },
 })
 
-const App = ({ classes }) => (
+const App = ({ routes, classes }) => (
   <div className={classes.container}>
-    <Header />
+    <Header routes={routes} />
     <div className={classes.body}>
-      <Sidebar routes={ROUTES} />
+      <Sidebar routes={routes} />
       <div className={classes.content}>
-        { ROUTES.map(route => (
+        { routes.map(route => (
           <Route
-            key={route.menu}
+            key={route.icon}
             path={route.path}
             exact={route.exact}
-            component={route.main}
+            component={route.bodyComponent}
           />
         ))}
       </div>

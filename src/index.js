@@ -1,20 +1,30 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+
+// redux
 import { createStore, applyMiddleware } from 'redux'
 import logger from 'redux-logger'
 import { Provider } from 'react-redux'
 import createHistory from 'history/createBrowserHistory'
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
+
+// jss
 import { ThemeProvider } from 'react-jss'
 import jss from 'jss'
 import preset from 'jss-preset-default'
 
+// fontawesome
+import fontawesome from '@fortawesome/fontawesome'
+import { faShip, faUsers, faCalendar, faHome } from '@fortawesome/fontawesome-free-solid'
+
 import App from './components/App/App'
+import routes from './routes'
 import reducers from './reducers'
 import { theme, globalStyles } from './styles'
 
 jss.setup(preset())
 jss.createStyleSheet(globalStyles).attach()
+fontawesome.library.add(faShip, faUsers, faCalendar, faHome)
 
 const history = createHistory()
 const store = createStore(reducers, applyMiddleware(routerMiddleware(history), logger))
@@ -27,7 +37,7 @@ ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <ThemeProvider theme={theme}>
-        <App />
+        <App routes={routes} />
       </ThemeProvider>
     </ConnectedRouter>
   </Provider>,

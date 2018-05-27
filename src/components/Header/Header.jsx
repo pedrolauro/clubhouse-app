@@ -1,4 +1,5 @@
 import React from 'react'
+import { Route } from 'react-router-dom'
 import injectSheet from 'react-jss'
 import Logo from './../Logo/Logo'
 
@@ -31,13 +32,20 @@ const styles = theme => ({
   },
 })
 
-const Header = ({ classes }) => (
+const Header = ({ routes, classes }) => (
   <div className={classes.container}>
     <div className={classes.logoContainer}>
       <Logo className={classes.logo} />
     </div>
     <div className={classes.bar}>
-      <h1>Topo</h1>
+      { routes.map(route => (
+        <Route
+          key={route.icon}
+          path={route.path}
+          exact={route.exact}
+          component={route.headerComponent}
+        />
+      ))}
     </div>
   </div>
 )
