@@ -1,16 +1,16 @@
 export const theme = {
   colors: {
-    blue: '#374366',
+    blue: '#495473',
     dark: '#22272A',
     lightDark: '#757575',
-    green: '#0CD19C',
+    green: '#4EC992',
     white: '#ffffff',
     white2: '#f6f7fb',
     'blue-light': '#5774B6',
   },
   sizes: {
     header: '70px',
-    logo: '40px',
+    logo: '50px',
     sidebar: '90px',
   },
   unit: {
@@ -22,10 +22,14 @@ export const globalStyles = {
   '@global body': {
     margin: '0',
     padding: '0',
-    fontFamily: 'sans-serif',
-    fontSize: '14px',
+    fontFamily: 'Arial, Helvetica, sans-serif',
+    fontSize: '12px',
     color: theme.colors.lightDark,
     overflow: 'hidden',
     boxSizing: 'border-box',
+  },
+  '@global h1, h2, h3, h4': {
+    textTransform: 'uppercase',
+    letterSpacing: '1px',
   },
 }
