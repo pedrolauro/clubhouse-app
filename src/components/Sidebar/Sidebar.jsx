@@ -4,17 +4,12 @@ import injectSheet from 'react-jss'
 
 const styles = theme => ({
   container: {
-    flex: '1 0',
+    flex: `0 0 ${theme.sizes.sidebar}`,
     backgroundColor: theme.colors.white,
-    zIndex: 1,
-    boxShadow: '0 0 25px 7px rgba(0,0,0,.04)',
+    boxShadow: '0 0 25px 7px rgba(0,0,0,.05)',
     paddingTop: '30px',
+    zIndex: 2,
   },
-  // header: {
-  //   textTransform: 'uppercase',
-  //   textAlign: 'center',
-  //   color: theme.colors.lightDark,
-  // },
   navlink: {
     margin: '10px 0',
     display: 'block',
@@ -36,9 +31,6 @@ const styles = theme => ({
 
 const Sidebar = ({ routes, classes }) => (
   <div className={classes.container}>
-    {/* <h4 className={classes.header}>
-      Regatta Planner
-    </h4> */}
     { routes.map(route => (
       <NavLink
         key={route.menu}

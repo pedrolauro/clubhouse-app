@@ -10,7 +10,11 @@ export const theme = {
   },
   sizes: {
     header: '80px',
-    logo: '30px',
+    logo: '70px',
+    sidebar: '160px',
+  },
+  unit: {
+    padding: 5,
   },
 }
 
@@ -19,6 +23,7 @@ export const globalStyles = {
     margin: '0',
     padding: '0',
     fontFamily: 'sans-serif',
+    color: theme.colors.lightDark,
     overflow: 'hidden',
     boxSizing: 'border-box',
   },

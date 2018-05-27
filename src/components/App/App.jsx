@@ -3,7 +3,6 @@ import { Route } from 'react-router-dom'
 import injectSheet from 'react-jss'
 import Header from './../Header/Header'
 import Sidebar from './../Sidebar/Sidebar'
-import SideHeader from './../SideHeader/SideHeader'
 import Dashboard from './../Dashboard/Dashboard'
 import Alunos from './../Alunos/Alunos'
 import Categorias from './../Categorias/Categorias'
@@ -31,43 +30,31 @@ const styles = theme => ({
   container: {
     display: 'flex',
     boxSizing: 'border-box',
-    padding: '0',
-    margin: '0',
-    alignContent: 'stretch',
+    flexDirection: 'column',
     alignItems: 'stretch',
     justifyContent: 'stretch',
-    color: theme.colors.lightDark,
   },
-  column: {
+  body: {
+    flex: `0 0 calc(100vh - ${theme.sizes.header})`,
     boxSizing: 'border-box',
-    height: '100vh',
     display: 'flex',
-    flexDirection: 'column',
-  },
-  left: {
-    extend: 'column',
-    flex: '0 0 100px',
-  },
-  right: {
-    extend: 'column',
-    flex: '1 0',
+    flexDirection: 'row',
+    zIndex: 3,
   },
   content: {
-    padding: '20px',
-    flex: '10 0',
+    padding: `${4 * theme.unit.padding}px`,
+    flex: '1 0',
     backgroundColor: theme.colors.white2,
     'overflow-y': 'auto',
+    zIndex: 1,
   },
 })
 
 const App = ({ classes }) => (
   <div className={classes.container}>
-    <div className={classes.left}>
-      <SideHeader />
+    <Header />
+    <div className={classes.body}>
       <Sidebar routes={ROUTES} />
-    </div>
-    <div className={classes.right}>
-      <Header />
       <div className={classes.content}>
         { ROUTES.map(route => (
           <Route
