@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux'
-import { routerReducer } from 'react-router-redux'
-import teste from './teste'
-import components from './components'
+import controller from './controller'
+import data from './data'
 
-export default combineReducers({ teste, components, router: routerReducer })
+export default combineReducers({
+  controller,
+  data,
+})

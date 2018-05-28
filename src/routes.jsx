@@ -1,8 +1,8 @@
 import React from 'react'
-import Main from './components/Main/Main'
-import Barcos from './components/Barcos/Barcos'
-import Alunos from './components/Alunos/Alunos'
-import Categorias from './components/Categorias/Categorias'
+import Main from './components/Main'
+import Barcos from './components/Barcos'
+import Alunos from './components/Alunos'
+import Categorias from './components/Categorias'
 
 export default [
   {

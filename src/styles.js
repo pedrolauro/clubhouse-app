@@ -10,7 +10,7 @@ export const theme = {
   },
   sizes: {
     header: '70px',
-    logo: '50px',
+    logo: '40px',
     sidebar: '90px',
   },
   unit: {

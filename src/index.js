@@ -15,16 +15,16 @@ import preset from 'jss-preset-default'
 
 // fontawesome
 import fontawesome from '@fortawesome/fontawesome'
-import { faShip, faUsers, faCalendar, faHome } from '@fortawesome/fontawesome-free-solid'
+import { faShip, faUsers, faCalendar, faHome, faSort } from '@fortawesome/fontawesome-free-solid'
 
-import App from './components/App/App'
+import App from './components/App'
 import routes from './routes'
 import reducers from './reducers'
 import { theme, globalStyles } from './styles'
 
 jss.setup(preset())
 jss.createStyleSheet(globalStyles).attach()
-fontawesome.library.add(faShip, faUsers, faCalendar, faHome)
+fontawesome.library.add(faShip, faUsers, faCalendar, faHome, faSort)
 
 const history = createHistory()
 const store = createStore(reducers, applyMiddleware(routerMiddleware(history), logger))

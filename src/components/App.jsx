@@ -1,8 +1,8 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
 import injectSheet from 'react-jss'
-import Header from './../Header/Header'
-import Sidebar from './../Sidebar/Sidebar'
+import Header from './Header'
+import Sidebar from './Sidebar'
 
 const styles = theme => ({
   container: {
