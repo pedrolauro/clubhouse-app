@@ -20,8 +20,6 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    // paddingLeft: '20px',
-    // backgroundColor: theme.colors.blue,
   },
   logo: {
     width: 'auto',

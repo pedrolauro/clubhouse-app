@@ -1,7 +1,7 @@
+
 import React from 'react';
+import Typography from '@material-ui/core/Typography';
 
 export default () => (
-  <div>
-    <h2>Categorias</h2>
-  </div>
+  <Typography noWrap>Categorias</Typography>
 )

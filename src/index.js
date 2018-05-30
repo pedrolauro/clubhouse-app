@@ -9,7 +9,7 @@ import createHistory from 'history/createBrowserHistory'
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
 
 // jss
-import { ThemeProvider } from 'react-jss'
+// import { ThemeProvider } from 'react-jss'
 import jss from 'jss'
 import preset from 'jss-preset-default'
 
@@ -17,10 +17,15 @@ import preset from 'jss-preset-default'
 import fontawesome from '@fortawesome/fontawesome'
 import { faShip, faUsers, faCalendar, faHome, faSort } from '@fortawesome/fontawesome-free-solid'
 
+// material ui
+import CssBaseline from '@material-ui/core/CssBaseline'
+import { MuiThemeProvider } from '@material-ui/core/styles'
+
 import App from './components/App'
 import routes from './routes'
 import reducers from './reducers'
 import { theme, globalStyles } from './styles'
+
 
 jss.setup(preset())
 jss.createStyleSheet(globalStyles).attach()
@@ -36,9 +41,11 @@ const store = createStore(reducers, applyMiddleware(routerMiddleware(history), l
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <ThemeProvider theme={theme}>
-        <App routes={routes} />
-      </ThemeProvider>
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline>
+          <App routes={routes} />
+        </CssBaseline>
+      </MuiThemeProvider>
     </ConnectedRouter>
   </Provider>,
   document.getElementById('root'),
