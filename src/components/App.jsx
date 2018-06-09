@@ -4,20 +4,20 @@ import { push } from 'react-router-redux'
 import { Route } from 'react-router-dom'
 
 import { withStyles } from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography'
 import Drawer from '@material-ui/core/Drawer'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Hidden from '@material-ui/core/Hidden'
 import Divider from '@material-ui/core/Divider'
-
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-
-// import Icon from '@fortawesome/react-fontawesome'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
+
+import Logo from './Logo'
 
 const styles = theme => ({
   root: {
@@ -40,14 +40,20 @@ const styles = theme => ({
       display: 'none',
     },
   },
-  toolbar: theme.mixins.toolbar,
+  toolbar: {
+    ...theme.mixins.toolbar,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    // justifyContent: 'space-between',
+    margin: '0 15px',
+  },
   drawerPaper: {
     width: theme.sizes.drawer,
     [theme.breakpoints.up('md')]: {
       position: 'relative',
     },
   },
-  
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
@@ -59,6 +65,11 @@ const styles = theme => ({
   menuActive: {
     borderLeft: `5px solid ${theme.palette.primary.light}`,
     backgroundColor: theme.palette.grey[100],
+  },
+  logo: {
+    fill: theme.palette.primary.main,
+    width: theme.sizes.logo,
+    height: 'auto',
   },
 })
 
@@ -87,7 +98,12 @@ class ResponsiveDrawer extends Component {
 
   drawer = (routes, classes) => (
     <div>
-      <div className={classes.toolbar} />
+      <div className={classes.toolbar}>
+        <Logo className={classes.logo} />
+        <Typography variant="title" color="primary">
+          BoatHouse
+        </Typography>
+      </div>
       <Divider />
       <List>
         { routes.map(route => (

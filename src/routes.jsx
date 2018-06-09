@@ -1,5 +1,5 @@
 import React from 'react'
-import Typography from '@material-ui/core/Typography';
+import Typography from '@material-ui/core/Typography'
 import HomeIcon from '@material-ui/icons/Home'
 import Timeline from '@material-ui/icons/Timeline'
 import DirectionsBoat from '@material-ui/icons/DirectionsBoat'
@@ -18,7 +18,7 @@ export default [
     icon: <HomeIcon />,
     headerComponent: () => (
       <Typography variant="title" color="inherit" noWrap>
-        Clubhouse App
+        BoatHouse
       </Typography>
     ),
     bodyComponent: () => <Main />,
