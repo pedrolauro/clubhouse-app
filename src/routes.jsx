@@ -1,16 +1,21 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography';
+import HomeIcon from '@material-ui/icons/Home'
+import Timeline from '@material-ui/icons/Timeline'
+import DirectionsBoat from '@material-ui/icons/DirectionsBoat'
+import People from '@material-ui/icons/People'
+
 import Main from './components/Main'
 import Barcos from './components/Barcos'
-import Alunos from './components/Alunos'
+import Atletas from './components/Atletas'
 import Categorias from './components/Categorias'
 
 export default [
   {
-    icon: 'home',
     name: 'Home',
     path: '/',
     exact: true,
+    icon: <HomeIcon />,
     headerComponent: () => (
       <Typography variant="title" color="inherit" noWrap>
         Clubhouse App
@@ -19,10 +24,9 @@ export default [
     bodyComponent: () => <Main />,
   },
   {
-    icon: 'ship',
     name: 'Barcos',
     path: '/barcos',
-    exact: true,
+    icon: <DirectionsBoat />,
     headerComponent: () => (
       <Typography variant="title" color="inherit" noWrap>
         Barcos
@@ -31,20 +35,20 @@ export default [
     bodyComponent: () => <Barcos />,
   },
   {
-    icon: 'users',
-    name: 'Alunos',
-    path: '/alunos',
+    name: 'Atletas',
+    path: '/atletas',
+    icon: <People />,
     headerComponent: () => (
       <Typography variant="title" color="inherit" noWrap>
-        Alunos
+        Atletas
       </Typography>
     ),
-    bodyComponent: () => <Alunos />,
+    bodyComponent: () => <Atletas />,
   },
   {
-    icon: 'calendar',
     name: 'Categorias',
     path: '/categorias',
+    icon: <Timeline />,
     headerComponent: () => (
       <Typography variant="title" color="inherit" noWrap>
         Categorias

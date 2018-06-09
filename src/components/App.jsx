@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { Route, Switch, Redirect, NavLink } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { push } from 'react-router-redux'
+import { Route } from 'react-router-dom'
 
 import { withStyles } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
@@ -13,17 +15,9 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 
-import Icon from '@fortawesome/react-fontawesome'
+// import Icon from '@fortawesome/react-fontawesome'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
-import InboxIcon from '@material-ui/icons/MoveToInbox'
-import DraftsIcon from '@material-ui/icons/Drafts'
-import StarIcon from '@material-ui/icons/Star'
-import SendIcon from '@material-ui/icons/Send'
-import MailIcon from '@material-ui/icons/Mail'
-import DeleteIcon from '@material-ui/icons/Delete'
-import ReportIcon from '@material-ui/icons/Report'
-
 
 const styles = theme => ({
   root: {
@@ -53,13 +47,18 @@ const styles = theme => ({
       position: 'relative',
     },
   },
+  
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
   },
-  navlink: {
-    
+  menu: {
+    borderLeft: '5px solid transparent',
+  },
+  menuActive: {
+    borderLeft: `5px solid ${theme.palette.primary.light}`,
+    backgroundColor: theme.palette.grey[100],
   },
 })
 
@@ -68,8 +67,22 @@ class ResponsiveDrawer extends Component {
     mobileOpen: false,
   }
 
+  getMenuClasses = (route, classes) => {
+    const { location } = this.props
+    if (location.pathname === route.path) {
+      return classes.menuActive
+    }
+    return classes.menu
+  }
+
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen })
+  }
+
+  handleRouteChange = (route) => {
+    const { dispatch } = this.props
+    dispatch(push(route.path))
+    this.handleDrawerToggle()
   }
 
   drawer = (routes, classes) => (
@@ -78,51 +91,18 @@ class ResponsiveDrawer extends Component {
       <Divider />
       <List>
         { routes.map(route => (
-          <NavLink
-            key={route.icon}
-            className={classes.navlink}
-            exact={route.exact}
-            to={route.path}
+          <ListItem
+            button
+            key={route.name}
+            className={this.getMenuClasses(route, classes)}
+            onClick={() => this.handleRouteChange(route)}
           >
-            <ListItem button>
-              <ListItemIcon>
-                {/* <Icon
-                  icon={route.icon}
-                  size="lg"
-                  onClick={this.handleDrawerToggle}
-                /> */}
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText primary={route.name} />
-            </ListItem>
-          </NavLink>
+            <ListItemIcon>
+              {route.icon}
+            </ListItemIcon>
+            <ListItemText primary={route.name} />
+          </ListItem>
         ))}
-              
-              {/* activeClassName={classes.navlinkActive} */}
-        {/* <ListItem button>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="Inbox" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <StarIcon />
-          </ListItemIcon>
-          <ListItemText primary="Starred" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <SendIcon />
-          </ListItemIcon>
-          <ListItemText primary="Send mail" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <DraftsIcon />
-          </ListItemIcon>
-          <ListItemText primary="Drafts" />
-        </ListItem> */}
       </List>
     </div>
   )
@@ -144,7 +124,7 @@ class ResponsiveDrawer extends Component {
             </IconButton>
             { routes.map(route => (
               <Route
-                key={route.icon}
+                key={route.name}
                 path={route.path}
                 exact={route.exact}
                 component={route.headerComponent}
@@ -183,7 +163,7 @@ class ResponsiveDrawer extends Component {
           <div className={classes.toolbar} />
           { routes.map(route => (
             <Route
-              key={route.icon}
+              key={route.name}
               path={route.path}
               exact={route.exact}
               component={route.bodyComponent}
@@ -195,56 +175,10 @@ class ResponsiveDrawer extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(ResponsiveDrawer)
+const mapStateToProps = ({ controller }) => {
+  const { location } = controller.router
+  return { location }
+}
 
-
-// import React from 'react'
-// import { Route } from 'react-router-dom'
-// import injectSheet from 'react-jss'
-// import Header from './Header'
-// import Sidebar from './Sidebar'
-
-// const styles = theme => ({
-//   container: {
-//     display: 'flex',
-//     boxSizing: 'border-box',
-//     flexDirection: 'column',
-//     alignItems: 'stretch',
-//     justifyContent: 'stretch',
-//   },
-//   body: {
-//     flex: `0 0 calc(100vh - ${theme.sizes.header})`,
-//     boxSizing: 'border-box',
-//     display: 'flex',
-//     flexDirection: 'row',
-//     zIndex: 3,
-//   },
-//   content: {
-//     padding: `${4 * theme.unit.padding}px`,
-//     flex: '1 0',
-//     backgroundColor: theme.colors.white2,
-//     'overflow-y': 'auto',
-//     zIndex: 1,
-//   },
-// })
-
-// const App = ({ routes, classes }) => (
-//   <div className={classes.container}>
-//     <Header routes={routes} />
-//     <div className={classes.body}>
-//       <Sidebar routes={routes} />
-//       <div className={classes.content}>
-//         { routes.map(route => (
-//           <Route
-//             key={route.icon}
-//             path={route.path}
-//             exact={route.exact}
-//             component={route.bodyComponent}
-//           />
-//         ))}
-//       </div>
-//     </div>
-//   </div>
-// )
-
-// export default injectSheet(styles)(App)
+const ThemedResponsiveDrawer = withStyles(styles, { withTheme: true })(ResponsiveDrawer)
+export default connect(mapStateToProps)(ThemedResponsiveDrawer)

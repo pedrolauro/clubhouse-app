@@ -20,6 +20,7 @@ import { faShip, faUsers, faCalendar, faHome, faSort } from '@fortawesome/fontaw
 // material ui
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { MuiThemeProvider } from '@material-ui/core/styles'
+import 'typeface-roboto'
 
 import App from './components/App'
 import routes from './routes'
