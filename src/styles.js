@@ -1,4 +1,20 @@
-export const theme = {
+import { createMuiTheme } from '@material-ui/core/styles'
+import purple from '@material-ui/core/colors/purple'
+import green from '@material-ui/core/colors/green'
+
+export const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: purple[300],
+      main: purple[500],
+      dark: purple[700],
+    },
+    secondary: {
+      light: green[300],
+      main: green[500],
+      dark: green[700],
+    },
+  },
   colors: {
     blue: '#495473',
     dark: '#22272A',
@@ -9,6 +25,7 @@ export const theme = {
     'blue-light': '#5774B6',
   },
   sizes: {
+    drawer: 200,
     header: '70px',
     logo: '40px',
     sidebar: '90px',
@@ -16,20 +33,20 @@ export const theme = {
   unit: {
     padding: 5,
   },
-}
+})
 
 export const globalStyles = {
   '@global body': {
-    margin: '0',
-    padding: '0',
-    fontFamily: 'Arial, Helvetica, sans-serif',
-    fontSize: '12px',
-    color: theme.colors.lightDark,
-    overflow: 'hidden',
-    boxSizing: 'border-box',
+    // margin: '0',
+    // padding: '0',
+    // fontFamily: 'Arial, Helvetica, sans-serif',
+    // fontSize: '12px',
+    // color: theme.colors.lightDark,
+    // overflow: 'hidden',
+    // boxSizing: 'border-box',
   },
   '@global h1, h2, h3, h4': {
-    textTransform: 'uppercase',
-    letterSpacing: '1px',
+    // textTransform: 'uppercase',
+    // letterSpacing: '1px',
   },
 }
