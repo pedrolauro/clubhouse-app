@@ -40,13 +40,16 @@ const styles = theme => ({
       display: 'none',
     },
   },
+  space: {
+    ...theme.mixins.toolbar,
+  },
   toolbar: {
     ...theme.mixins.toolbar,
+    backgroundColor: theme.palette.grey[100],
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-around',
-    // justifyContent: 'space-between',
-    margin: '0 15px',
+    padding: `0 ${theme.spacing.unit * 2}px`,
   },
   drawerPaper: {
     width: theme.sizes.drawer,
@@ -55,9 +58,15 @@ const styles = theme => ({
     },
   },
   content: {
+    overflow: 'auto',
+    height: '100vh',
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
+    // padding: theme.spacing.unit * 2,
+    // [theme.breakpoints.down('sm')]: {
+    //   padding: 0,
+    //   paddingTop: '1px',
+    // },
   },
   menu: {
     borderLeft: '5px solid transparent',
@@ -68,8 +77,11 @@ const styles = theme => ({
   },
   logo: {
     fill: theme.palette.primary.main,
-    width: theme.sizes.logo,
+    width: `${theme.sizes.logo}px`,
     height: 'auto',
+  },
+  list: {
+    padding: 0,
   },
 })
 
@@ -105,7 +117,7 @@ class ResponsiveDrawer extends Component {
         </Typography>
       </div>
       <Divider />
-      <List>
+      <List className={classes.list}>
         { routes.map(route => (
           <ListItem
             button
@@ -176,7 +188,7 @@ class ResponsiveDrawer extends Component {
           </Drawer>
         </Hidden>
         <main className={classes.content}>
-          <div className={classes.toolbar} />
+          <div className={classes.space} />
           { routes.map(route => (
             <Route
               key={route.name}

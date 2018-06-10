@@ -26,9 +26,7 @@ export const theme = createMuiTheme({
   },
   sizes: {
     drawer: 200,
-    header: '70px',
-    logo: '40px',
-    sidebar: '90px',
+    logo: 40,
   },
   unit: {
     padding: 5,
@@ -37,13 +35,13 @@ export const theme = createMuiTheme({
 
 export const globalStyles = {
   '@global body': {
-    // margin: '0',
-    // padding: '0',
+    margin: '0',
+    padding: '0',
     // fontFamily: 'Arial, Helvetica, sans-serif',
     // fontSize: '12px',
     // color: theme.colors.lightDark,
-    // overflow: 'hidden',
-    // boxSizing: 'border-box',
+    overflow: 'hidden',
+    boxSizing: 'border-box',
   },
   '@global h1, h2, h3, h4': {
     // textTransform: 'uppercase',

@@ -20,7 +20,6 @@ import { faShip, faUsers, faCalendar, faHome, faSort } from '@fortawesome/fontaw
 // material ui
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { MuiThemeProvider } from '@material-ui/core/styles'
-import 'typeface-roboto'
 
 import App from './components/App'
 import routes from './routes'
@@ -34,10 +33,6 @@ fontawesome.library.add(faShip, faUsers, faCalendar, faHome, faSort)
 
 const history = createHistory()
 const store = createStore(reducers, applyMiddleware(routerMiddleware(history), logger))
-
-// Now you can dispatch navigation actions from anywhere!
-// import { push } from 'react-router-redux'
-// store.dispatch(push('/foo'))
 
 ReactDOM.render(
   <Provider store={store}>

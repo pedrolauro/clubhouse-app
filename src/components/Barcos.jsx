@@ -1,162 +1,54 @@
-// import React from 'react'
-// import { connect } from 'react-redux'
-// import { bindActionCreators } from 'redux'
-// import * as barcosAction from './../actions/BarcosAction'
+import React from 'react'
 
-// export class BarcoListContainer extends React.Component {
-//   constructor() {
-//     super()
-//     this.state = { isGrouped: false }
-//   }
-
-//   componentDidMount() {
-//     this.props.action.getBarcosAction()
-//       .catch((error) => {
-//         // toastr.error(error)
-//         console.error(error)
-//       })
-//   }
-
-//   getBarcosByGroup = barcos => _.groupBy(barcos, barco => (barco.groupId ? barco.groupId : 'Ungrouped'))
-
-//   handleAdd = () => {
-//     this.props.history.push('/barcos')
-//   }
-
-//   handleEdit = (barco) => {
-//     if (barco.id) {
-//       this.setState({ selectedBarcoId: undefined })
-//       this.props.history.push(`/barcos/${barco.id}`)
-//     }
-//   }
-
-//   handleDelete = (barco) => {
-//     if (barco.id) {
-//       this.setState({ selectedBarcoId: undefined })
-//       this.props.action.deleteBarcoAction(barco.id)
-//         .catch((error) => {
-//           // toastr.error(error)
-//           console.error(error)
-//         })
-//     }
-//   }
-
-//   handleSwitchGrouping = () => {
-//     this.setState({ isGrouped: !this.state.isGrouped })
-//     console.log('switch grouping')
-//   }
-
-//   render() {
-//     const { barcos } = this.props
-//     const { isGrouped } = this.state
-//     const barcosByGroup = isGrouped && this.getBarcosByGroup(barcos)
-
-//     if (!barcos) {
-//       return (
-//         <div>Loading...</div>
-//       )
-//     }
-
-//     return (
-//       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-
-//         {
-//           !isGrouped &&
-//           <Card
-//             style={{
-//               margin: 20,
-//               order: 2,
-//               flex: '1 100%',
-//               maxWidth: 1024,
-//             }}
-//           >
-//             <CardHeader
-//               title="All Barcos"
-//               subtitle={
-//                 <Switch
-//                   toggled={false}
-//                   onToggle={this.handleSwitchGrouping}
-//                   labelPosition="right"
-//                   label="Grouping"
-//                 />
-//               }
-//             />
-//             <SmartTable {...{
-//               tableHeaders,
-//               data: barcos,
-//               onEdit: this.handleEdit,
-//               onDelete: this.handleDelete,
-//             }}
-//             />
-//           </Card>
-//         }
-
-//         {
-//           isGrouped &&
-//           (Object.keys(barcosByGroup).map((groupName, index) => (
-//             <Card
-//               key={index}
-//               style={{
-//                 margin: 20,
-//                 order: 2,
-//                 flex: '1 100%',
-//                 maxWidth: 1024,
-//               }}
-//             >
-//               <CardHeader
-//                 title={groupName}
-//                 subtitle={
-//                   <Switch
-//                     toggled
-//                     onToggle={this.handleSwitchGrouping}
-//                     labelPosition="right"
-//                     label="Grouping"
-//                   />
-//                 }
-//               />
-//               <SmartTable {...{
-//                 tableHeaders,
-//                 data: barcosByGroup[groupName],
-//                 onEdit: this.handleEdit,
-//                 onDelete: this.handleDelete,
-//               }}
-//               />
-//             </Card>
-//           )))
-//         }
-
-//         <Button
-//           variant="fab"
-//           onTouchTap={this.handleAdd}
-//           secondary
-//           style={{
-//             position: 'fixed',
-//             top: 80,
-//             right: 30,
-//             zIndex: 9999,
-//           }}
-//         >
-//           <AddIcon />
-//         </Button>
-//       </div>
-//     )
-//   }
-// }
-
-// const mapStateToProps = state => ({
-//   barcos: state.data.barcos,
-// })
-
-// const mapDispatchToProps = dispatch => ({
-//   action: bindActionCreators(barcosAction, dispatch),
-// })
-
-// export default connect(mapStateToProps, mapDispatchToProps)(BarcoListContainer)
+import EnhancedTable from './common/EnhancedTable'
 
 
-import React from 'react';
-import Typography from '@material-ui/core/Typography';
+let id = 0
+function createData(name, calories, fat, carbs, protein) {
+  id += 1
+  return {
+    id,
+    name,
+    calories,
+    fat,
+    carbs,
+    protein,
+  }
+}
+
+const columnData = [
+  {
+    id: 'name', numeric: false, disablePadding: false, label: 'Dessert (100g serving)',
+  },
+  {
+    id: 'calories', numeric: true, disablePadding: false, label: 'Calories',
+  },
+  {
+    id: 'fat', numeric: true, disablePadding: false, label: 'Fat (g)',
+  },
+  {
+    id: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)',
+  },
+  {
+    id: 'protein', numeric: true, disablePadding: false, label: 'Protein (g)',
+  },
+]
+
+const data = [
+  createData('Cupcake', 305, 3.7, 67, 4.3),
+  createData('Donut', 452, 25.0, 51, 4.9),
+  createData('Eclair', 262, 16.0, 24, 6.0),
+  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+  createData('Gingerbread', 356, 16.0, 49, 3.9),
+  createData('Honeycomb', 408, 3.2, 87, 6.5),
+  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+  createData('Jelly Bean', 375, 0.0, 94, 0.0),
+  createData('KitKat', 518, 26.0, 65, 7.0),
+  createData('Lollipop', 392, 0.2, 98, 0.0),
+  createData('Marshmallow', 318, 0, 81, 2.0),
+  createData('Nougat', 360, 19.0, 9, 37.0),
+]
 
 export default () => (
-  <Typography noWrap>Barcos</Typography>
+  <EnhancedTable columnData={columnData} initialData={data} />
 )
