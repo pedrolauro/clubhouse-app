@@ -34,6 +34,9 @@ export const theme = createMuiTheme({
 })
 
 export const globalStyles = {
+  '@global html': {
+    overflow: 'hidden',
+  },
   '@global body': {
     margin: '0',
     padding: '0',

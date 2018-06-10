@@ -47,40 +47,31 @@ class EnhancedTable extends Component {
     this.setState({ data, order, orderBy })
   }
 
-  printTableCell = (row, column, index) => {
-    let cell
-    if (index !== 0) {
-      cell = (
-        <TableCell
-          key={column.id}
-          numeric={column.numeric}
-        >
-          {row[column.id]}
-        </TableCell>
-      )
-    } else {
-      cell = (
-        <TableCell
-          key={column.id}
-          component="th"
-          scope="row"
-        >
-          {row[column.id]}
-        </TableCell>
-      )
+  printTableCell = (row, column) => {
+    let value = row[column.id]
+    if (column.valueAdapter) {
+      value = column.valueAdapter(value)
     }
-    return cell
+
+    return (
+      <TableCell
+        key={column.id}
+        numeric={column.numeric}
+      >
+        {value}
+      </TableCell>
+    )
   }
 
   render() {
-    const { classes, columnData } = this.props
+    const { classes, metaData } = this.props
     const { data, order, orderBy } = this.state
 
     return (
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            {columnData.map(column => (
+            {metaData.map(column => (
               <TableCell
                 key={column.id}
                 numeric={column.numeric}
@@ -107,7 +98,7 @@ class EnhancedTable extends Component {
         <TableBody>
           {data.map(row => (
             <TableRow key={row.id}>
-              {columnData.map((column, index) => this.printTableCell(row, column, index))}
+              {metaData.map((column, index) => this.printTableCell(row, column, index))}
             </TableRow>
           ))}
         </TableBody>
