@@ -8,27 +8,39 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import TableSortLabel from '@material-ui/core/TableSortLabel'
 import Tooltip from '@material-ui/core/Tooltip'
+import IconButton from '@material-ui/core/IconButton'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
+import MoreVertIcon from '@material-ui/icons/MoreVert'
+
+import ListItemText from '@material-ui/core/ListItemText'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+
 // import Hidden from '@material-ui/core/Hidden'
 
 const styles = () => ({
-  root: {
-    width: '100%',
-  },
   table: {
   },
 })
 
 class EnhancedTable extends Component {
-  constructor(props) {
-    super(props)
+  state = {
+    anchorEl: {},
+    order: undefined,
+    orderBy: undefined,
+    data: [...this.props.initialData],
+  }
 
-    const { initialData: data } = props
+  handleClick = row => (event) => {
+    const anchorEl = { ...this.state.anchorEl }
+    anchorEl[row.id] = event.currentTarget
+    this.setState({ anchorEl })
+  }
 
-    this.state = {
-      order: undefined,
-      orderBy: undefined,
-      data,
-    }
+  handleClose = (row) => {
+    const anchorEl = { ...this.state.anchorEl }
+    anchorEl[row.id] = null
+    this.setState({ anchorEl })
   }
 
   handleRequestSort = (property) => {
@@ -47,7 +59,7 @@ class EnhancedTable extends Component {
     this.setState({ data, order, orderBy })
   }
 
-  printTableCell = (row, column) => {
+  printTableCell = ({ row, column }) => {
     let value = row[column.id]
     if (column.valueAdapter) {
       value = column.valueAdapter(value)
@@ -63,9 +75,45 @@ class EnhancedTable extends Component {
     )
   }
 
+  printActionsMenu = ({ anchorEl, actions, row }) => (
+    <TableCell>
+      <IconButton
+        aria-label="Ações"
+        aria-owns={anchorEl[row.id] ? `menu-item-${row.id}` : null}
+        aria-haspopup="true"
+        onClick={this.handleClick(row)}
+      >
+        <MoreVertIcon />
+      </IconButton>
+      <Menu
+        id={`menu-item-${row.id}`}
+        anchorEl={anchorEl[row.id]}
+        open={!!anchorEl[row.id]}
+        onClose={() => this.handleClose(row)}
+      >
+        {actions.map(action => (
+          <MenuItem
+            key={action.id}
+            onClick={() => action.onClick(row) || this.handleClose(row)}
+          >
+            <ListItemIcon>
+              {action.icon}
+            </ListItemIcon>
+            <ListItemText primary={action.label} />
+          </MenuItem>
+        ), this)}
+      </Menu>
+    </TableCell>
+  )
+
   render() {
-    const { classes, metaData } = this.props
-    const { data, order, orderBy } = this.state
+    const { classes, metaData, actions } = this.props
+    const {
+      data,
+      order,
+      orderBy,
+      anchorEl,
+    } = this.state
 
     return (
       <Table className={classes.table}>
@@ -93,12 +141,14 @@ class EnhancedTable extends Component {
                 </Tooltip>
               </TableCell>
             ))}
+            <TableCell padding="default" />
           </TableRow>
         </TableHead>
         <TableBody>
           {data.map(row => (
             <TableRow key={row.id}>
-              {metaData.map((column, index) => this.printTableCell(row, column, index))}
+              {metaData.map(column => this.printTableCell({ row, column }))}
+              {this.printActionsMenu({ anchorEl, actions, row })}
             </TableRow>
           ))}
         </TableBody>
