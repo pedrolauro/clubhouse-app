@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+
 import Edit from '@material-ui/icons/Edit'
 import Delete from '@material-ui/icons/Delete'
 import HighlightOff from '@material-ui/icons/HighlightOff'
@@ -7,70 +9,52 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
-import withMobileDialog from '@material-ui/core/withMobileDialog';
-
+import withMobileDialog from '@material-ui/core/withMobileDialog'
 
 import EnhancedTable from './common/EnhancedTable'
+import * as actions from '../actions'
+import { barcoToString } from '../helpers'
 
-function createData(id, type, weightClass, color, detail, maintenance) {
-  return {
-    id,
-    type,
-    weightClass,
-    color,
-    detail,
-    maintenance,
-  }
-}
-
-let id = 1
 class Barcos extends Component {
   state = {
     dialogOpened: false,
     barcoToDelete: undefined,
     metaData: [
       {
-        id: 'type',
+        id: 'tipo',
         numeric: false,
         disablePadding: false,
         label: 'Tipo',
       },
       {
-        id: 'weightClass',
+        id: 'classePeso',
         numeric: false,
         disablePadding: false,
         label: 'Peso',
       },
       {
-        id: 'color',
+        id: 'cor',
         numeric: false,
         disablePadding: false,
         label: 'Cor principal',
       },
       {
-        id: 'detail',
+        id: 'detalhe',
         numeric: false,
         disablePadding: false,
         label: 'Detalhe',
       },
       {
-        id: 'maintenance',
+        id: 'manutencao',
         numeric: false,
         disablePadding: false,
         label: 'Em manutenção?',
         valueAdapter: value => value ? 'Sim' : 'Não',
       },
     ],
-    data: [
-      createData(id++, '4x/4-', 'leve', 'azul', 'china', true),
-      createData(id++, '2x/2-', 'leve', 'azul', undefined, true),
-      createData(id++, '2x/2-', 'pesado', 'azul', 'china', false),
-      createData(id++, '1x', 'leve', 'amarelo', 'fibra', false),
-      createData(id++, '8+', 'pesado', 'marrom', 'madeira', false),
-    ],
-    actions: [
+    metaActions: [
       {
-        id: 'maintenance',
+        id: 'manutencao',
         label: 'Em manutenção?',
         icon: <HighlightOff />,
         onClick: (data) => { this.enableBarco(data) },
@@ -90,21 +74,25 @@ class Barcos extends Component {
     ],
   }
 
+  componentDidMount() {
+    this.props.fetchBarcos()
+  }
+
   openDeleteDialog = (data) => { this.setState({ dialogOpened: true, barcoToDelete: data }) }
   closeDeleteDialog = () => { this.setState({ dialogOpened: false }) }
 
   editBarco = (data) => {
-    console.log(`edit id ${data.id}, barco ${data.type} ${data.color}`)
+    console.log(`edit id ${data.id}, barco ${barcoToString(data)}`)
   }
 
   enableBarco = (data) => {
-    console.log(`enable id ${data.id}, barco ${data.type} ${data.color}`)
+    console.log(`enable id ${data.id}, barco ${barcoToString(data)}`)
   }
 
   deleteBarco = () => {
-    const { data, barcoToDelete } = this.state
-    const newData = [...data].filter(item => item.id !== barcoToDelete.id)
-    this.setState({ data: newData })
+    // const { data, barcoToDelete } = this.state
+    // const newData = [...data].filter(item => item.id !== barcoToDelete.id)
+    // this.setState({ data: newData })
     this.closeDeleteDialog()
   }
 
@@ -112,13 +100,13 @@ class Barcos extends Component {
     const {
       dialogOpened,
       barcoToDelete,
-      data,
       metaData,
-      actions,
+      metaActions,
     } = this.state
 
-    const { fullScreen } = this.props
-    const content = !barcoToDelete ? '' : `${barcoToDelete.type} ${barcoToDelete.weightClass} ${barcoToDelete.color}`
+    const { fullScreen, barcos } = this.props
+
+    const content = !barcoToDelete ? '' : barcoToString(barcoToDelete)
     const confirmText = 'Confirmar'
     const cancelText = 'Cancelar'
 
@@ -126,8 +114,8 @@ class Barcos extends Component {
       <div>
         <EnhancedTable
           metaData={metaData}
-          initialData={data}
-          actions={actions}
+          initialData={barcos}
+          actions={metaActions}
         />
         <Dialog
           fullScreen={fullScreen}
@@ -154,4 +142,6 @@ class Barcos extends Component {
   }
 }
 
-export default withMobileDialog()(Barcos)
+const mapStateToProps = ({ data }) => ({ barcos: data.barcos })
+
+export default connect(mapStateToProps, actions)(withMobileDialog()(Barcos))

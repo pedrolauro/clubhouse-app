@@ -1,13 +1,11 @@
 {
-  "name": "regatta-planner",
+  "name": "boathouse",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome": "^1.1.8",
-    "@fortawesome/fontawesome-free-solid": "^5.0.13",
-    "@fortawesome/react-fontawesome": "^0.0.20",
     "@material-ui/core": "^1.1.0",
     "@material-ui/icons": "^1.1.0",
+    "firebase": "^5.0.4",
     "history": "^4.7.2",
     "jss": "^9.8.1",
     "jss-preset-default": "^4.5.0",
@@ -23,6 +21,7 @@
     "recompose": "^0.27.1",
     "redux": "^4.0.0",
     "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
     "typeface-roboto": "^0.0.54"
   },
   "scripts": {

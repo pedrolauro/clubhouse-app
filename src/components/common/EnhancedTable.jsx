@@ -31,6 +31,12 @@ class EnhancedTable extends Component {
     data: [...this.props.initialData],
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.initialData !== this.props.initialData) {
+      this.setState({ data: [...this.props.initialData] })
+    }
+  }
+
   handleClick = row => (event) => {
     const anchorEl = { ...this.state.anchorEl }
     anchorEl[row.id] = event.currentTarget
@@ -114,6 +120,8 @@ class EnhancedTable extends Component {
       orderBy,
       anchorEl,
     } = this.state
+
+    console.log(`render, data: ${data.length}`);
 
     return (
       <Table className={classes.table}>

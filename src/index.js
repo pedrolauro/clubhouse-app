@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 // redux
 import { createStore, applyMiddleware } from 'redux'
 import logger from 'redux-logger'
+import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 import createHistory from 'history/createBrowserHistory'
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux'
@@ -14,8 +15,8 @@ import jss from 'jss'
 import preset from 'jss-preset-default'
 
 // fontawesome
-import fontawesome from '@fortawesome/fontawesome'
-import { faShip, faUsers, faCalendar, faHome, faSort } from '@fortawesome/fontawesome-free-solid'
+// import fontawesome from '@fortawesome/fontawesome'
+// import { faShip, faUsers, faCalendar, faHome, faSort } from '@fortawesome/fontawesome-free-solid'
 
 // material ui
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -29,10 +30,11 @@ import { theme, globalStyles } from './styles'
 
 jss.setup(preset())
 jss.createStyleSheet(globalStyles).attach()
-fontawesome.library.add(faShip, faUsers, faCalendar, faHome, faSort)
+// fontawesome.library.add(faShip, faUsers, faCalendar, faHome, faSort)
 
+// TODO: remove logger on production
 const history = createHistory()
-const store = createStore(reducers, applyMiddleware(routerMiddleware(history), logger))
+const store = createStore(reducers, applyMiddleware(routerMiddleware(history), thunk, logger))
 
 ReactDOM.render(
   <Provider store={store}>
