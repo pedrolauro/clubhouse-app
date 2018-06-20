@@ -33,6 +33,8 @@ jss.createStyleSheet(globalStyles).attach()
 // fontawesome.library.add(faShip, faUsers, faCalendar, faHome, faSort)
 
 // TODO: remove logger on production
+// if (process.env.NODE_ENV !== 'production') {
+// }
 const history = createHistory()
 const store = createStore(reducers, applyMiddleware(routerMiddleware(history), thunk, logger))
 

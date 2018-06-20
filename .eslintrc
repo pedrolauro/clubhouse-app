@@ -9,6 +9,7 @@
     "no-plusplus": 0,
     "react/prop-types": 0,
     "import/extensions": 0,
-    "no-confusing-arrow": 0
+    "no-confusing-arrow": 0,
+    "react/no-did-update-set-state": 0
   }
 }

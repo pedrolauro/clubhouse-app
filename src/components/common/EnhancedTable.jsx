@@ -121,8 +121,6 @@ class EnhancedTable extends Component {
       anchorEl,
     } = this.state
 
-    console.log(`render, data: ${data.length}`);
-
     return (
       <Table className={classes.table}>
         <TableHead>
