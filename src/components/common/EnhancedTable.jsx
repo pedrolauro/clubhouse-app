@@ -28,13 +28,6 @@ class EnhancedTable extends Component {
     anchorEl: {},
     order: undefined,
     orderBy: undefined,
-    data: [...this.props.initialData],
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.initialData !== this.props.initialData) {
-      this.setState({ data: [...this.props.initialData] })
-    }
   }
 
   handleClick = row => (event) => {
@@ -51,18 +44,26 @@ class EnhancedTable extends Component {
 
   handleRequestSort = (property) => {
     const orderBy = property
-    let order = 'desc'
+    let order = 'asc'
 
-    if (this.state.orderBy === property && this.state.order === 'desc') {
-      order = 'asc'
+    if (this.state.orderBy === property && this.state.order === 'asc') {
+      order = 'desc'
     }
 
-    const data =
-      order === 'desc'
-        ? this.state.data.sort((a, b) => (b[orderBy] < a[orderBy] ? -1 : 1))
-        : this.state.data.sort((a, b) => (a[orderBy] < b[orderBy] ? -1 : 1))
+    this.setState({ order, orderBy })
+  }
 
-    this.setState({ data, order, orderBy })
+  orderData = ({ data, order, orderBy }) => {
+    if (!data || data.length === 0) {
+      return []
+    }
+    if (!order || !orderBy) {
+      return data
+    }
+
+    return order === 'desc'
+      ? [...data].sort((a, b) => (b[orderBy] < a[orderBy] ? -1 : 1))
+      : [...data].sort((a, b) => (a[orderBy] < b[orderBy] ? -1 : 1))
   }
 
   printTableCell = ({ row, column }) => {
@@ -113,13 +114,20 @@ class EnhancedTable extends Component {
   )
 
   render() {
-    const { classes, metaData, actions } = this.props
     const {
+      classes,
       data,
+      metaData,
+      actions,
+    } = this.props
+
+    const {
       order,
       orderBy,
       anchorEl,
     } = this.state
+
+    const orderedData = this.orderData({ data, order, orderBy })
 
     return (
       <Table className={classes.table}>
@@ -151,7 +159,7 @@ class EnhancedTable extends Component {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(row => (
+          {orderedData.map(row => (
             <TableRow key={row.id}>
               {metaData.map(column => this.printTableCell({ row, column }))}
               {this.printActionsMenu({ anchorEl, actions, row })}

@@ -114,7 +114,7 @@ class Barcos extends Component {
       <div>
         <EnhancedTable
           metaData={metaData}
-          initialData={barcos}
+          data={barcos}
           actions={metaActions}
         />
         <Dialog
