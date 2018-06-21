@@ -75,7 +75,11 @@ class Barcos extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchBarcos()
+    this.props.subscribeFetchBarcos()
+  }
+
+  componentWillUnmount() {
+    this.props.unsubscribeFetchBarcos()
   }
 
   openDeleteDialog = (data) => { this.setState({ dialogOpened: true, barcoToDelete: data }) }

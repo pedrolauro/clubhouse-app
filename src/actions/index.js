@@ -1,15 +1,29 @@
 import { barcosRef } from '../config/firebase'
 
-export const fetchBarcos = () => async (dispatch) => {
-  barcosRef.on('value', (snapshot) => {
-    dispatch({
-      type: 'FETCH_BARCOS',
-      payload: snapshot.val(),
+export const subscribeFetchBarcos = () => async (dispatch) => {
+  const subscriber =
+    barcosRef.on('value', (snapshot) => {
+      dispatch({
+        type: 'FETCH_BARCOS',
+        payload: snapshot.val(),
+      })
     })
+
+  dispatch({
+    type: 'SUBSCRIBE_FETCH_BARCOS',
+    payload: subscriber,
   })
 }
 
-// TODO: unsubscribe barcosRef
+export const unsubscribeFetchBarcos = () => (dispatch, getState) => {
+  const { FETCH_BARCOS_SUBSCRIBER } = getState().controller.subscribers
+  if (FETCH_BARCOS_SUBSCRIBER) {
+    barcosRef.off('value', FETCH_BARCOS_SUBSCRIBER)
+    dispatch({
+      type: 'UNSUBSCRIBE_FETCH_BARCOS',
+    })
+  }
+}
 
 export const addBarco = newBarco => async () => {
   barcosRef.push().set(newBarco)
