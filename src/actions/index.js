@@ -28,3 +28,11 @@ export const unsubscribeFetchBarcos = () => (dispatch, getState) => {
 export const addBarco = newBarco => async () => {
   barcosRef.push().set(newBarco)
 }
+
+export const deleteBarco = barcoId => async () => {
+  barcosRef.child(barcoId).remove()
+}
+
+export const enableBarco = (barcoId, enable) => async () => {
+  barcosRef.child(`${barcoId}/manutencao`).set(enable)
+}

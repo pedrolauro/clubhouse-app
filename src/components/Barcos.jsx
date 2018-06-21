@@ -89,14 +89,14 @@ class Barcos extends Component {
     console.log(`edit id ${data.id}, barco ${barcoToString(data)}`)
   }
 
-  enableBarco = (data) => {
-    console.log(`enable id ${data.id}, barco ${barcoToString(data)}`)
+  enableBarco = (barco) => {
+    this.props.enableBarco(barco.id, !barco.manutencao)
   }
 
   deleteBarco = () => {
-    // const { data, barcoToDelete } = this.state
-    // const newData = [...data].filter(item => item.id !== barcoToDelete.id)
-    // this.setState({ data: newData })
+    const { barcoToDelete } = this.state
+    this.props.deleteBarco(barcoToDelete.id)
+    this.setState({ barcoToDelete: undefined })
     this.closeDeleteDialog()
   }
 
