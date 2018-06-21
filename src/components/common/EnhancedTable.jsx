@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 
-import { withStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -17,11 +16,6 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 
 // import Hidden from '@material-ui/core/Hidden'
-
-const styles = () => ({
-  table: {
-  },
-})
 
 class EnhancedTable extends Component {
   state = {
@@ -115,7 +109,6 @@ class EnhancedTable extends Component {
 
   render() {
     const {
-      classes,
       data,
       metaData,
       actions,
@@ -130,7 +123,7 @@ class EnhancedTable extends Component {
     const orderedData = this.orderData({ data, order, orderBy })
 
     return (
-      <Table className={classes.table}>
+      <Table>
         <TableHead>
           <TableRow>
             {metaData.map(column => (
@@ -171,4 +164,4 @@ class EnhancedTable extends Component {
   }
 }
 
-export default withStyles(styles)(EnhancedTable)
+export default EnhancedTable
