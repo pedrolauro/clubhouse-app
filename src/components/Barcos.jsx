@@ -4,20 +4,39 @@ import { connect } from 'react-redux'
 import Edit from '@material-ui/icons/Edit'
 import Delete from '@material-ui/icons/Delete'
 import HighlightOff from '@material-ui/icons/HighlightOff'
-import Button from '@material-ui/core/Button'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import withMobileDialog from '@material-ui/core/withMobileDialog'
 
+// import ListItemText from '@material-ui/core/ListItemText'
+// import ListItem from '@material-ui/core/ListItem'
+// import List from '@material-ui/core/List'
+// import Divider from '@material-ui/core/Divider'
+// import AppBar from '@material-ui/core/AppBar'
+// import Toolbar from '@material-ui/core/Toolbar'
+// import IconButton from '@material-ui/core/IconButton'
+// import Typography from '@material-ui/core/Typography'
+// import CloseIcon from '@material-ui/icons/Close'
+// import Slide from '@material-ui/core/Slide'
+
+import ConfirmationDialog from './common/ConfirmationDialog'
 import EnhancedTable from './common/EnhancedTable'
 import * as actions from '../actions'
 import { barcoToString } from '../helpers'
 
+// const styles = {
+//   appBar: {
+//     position: 'relative',
+//   },
+//   flex: {
+//     flex: 1,
+//   },
+// }
+
+// function Transition(props) {
+//   return <Slide direction="up" {...props} />
+// }
+
 class Barcos extends Component {
   state = {
-    dialogOpened: false,
+    deleteDialogOpened: false,
     barcoToDelete: undefined,
     metaData: [
       {
@@ -82,8 +101,8 @@ class Barcos extends Component {
     this.props.unsubscribeFetchBarcos()
   }
 
-  openDeleteDialog = (data) => { this.setState({ dialogOpened: true, barcoToDelete: data }) }
-  closeDeleteDialog = () => { this.setState({ dialogOpened: false }) }
+  openDeleteDialog = (data) => { this.setState({ deleteDialogOpened: true, barcoToDelete: data }) }
+  closeDeleteDialog = () => { this.setState({ deleteDialogOpened: false }) }
 
   editBarco = (data) => {
     console.log(`edit id ${data.id}, barco ${barcoToString(data)}`)
@@ -102,17 +121,21 @@ class Barcos extends Component {
 
   render() {
     const {
-      dialogOpened,
+      deleteDialogOpened,
       barcoToDelete,
       metaData,
       metaActions,
     } = this.state
 
-    const { fullScreen, barcos } = this.props
+    const { barcos } = this.props
 
-    const content = !barcoToDelete ? '' : barcoToString(barcoToDelete)
-    const confirmText = 'Confirmar'
-    const cancelText = 'Cancelar'
+    const deleteDialogcontent = (
+      <span>{'Tem certeza que deseja deletar o barco '}
+        <b>{!barcoToDelete ? '' : barcoToString(barcoToDelete)}</b>?
+      </span>
+    )
+
+    // let classes = {}
 
     return (
       <div>
@@ -121,26 +144,43 @@ class Barcos extends Component {
           data={barcos}
           actions={metaActions}
         />
-        <Dialog
+        <ConfirmationDialog
+          open={deleteDialogOpened}
+          handleClose={this.closeDeleteDialog}
+          handleConfirm={this.deleteBarco}
+          content={deleteDialogcontent}
+        />
+
+        {/* <Dialog
           fullScreen={fullScreen}
-          open={dialogOpened}
-          onClose={this.closeDeleteDialog}
-          aria-describedby="alert-dialog-description"
+          open={this.state.open}
+          onClose={this.handleClose}
+          TransitionComponent={Transition}
         >
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-            Tem certeza que deseja deletar o barco <b>{content}</b>?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.closeDeleteDialog} variant="outlined" color="primary">
-              {cancelText}
-            </Button>
-            <Button onClick={this.deleteBarco} variant="raised" color="primary" autoFocus>
-              {confirmText}
-            </Button>
-          </DialogActions>
-        </Dialog>
+          <AppBar className={classes.appBar}>
+            <Toolbar>
+              <IconButton color="inherit" onClick={this.handleClose} aria-label="Close">
+                <CloseIcon />
+              </IconButton>
+              <Typography variant="title" color="inherit" className={classes.flex}>
+                Sound
+              </Typography>
+              <Button color="inherit" onClick={this.handleClose}>
+                save
+              </Button>
+            </Toolbar>
+          </AppBar>
+          <List>
+            <ListItem button>
+              <ListItemText primary="Phone ringtone" secondary="Titania" />
+            </ListItem>
+            <Divider />
+            <ListItem button>
+              <ListItemText primary="Default notification ringtone" secondary="Tethys" />
+            </ListItem>
+          </List>
+        </Dialog> */}
+
       </div>
     )
   }
@@ -148,4 +188,4 @@ class Barcos extends Component {
 
 const mapStateToProps = ({ data }) => ({ barcos: data.barcos })
 
-export default connect(mapStateToProps, actions)(withMobileDialog()(Barcos))
+export default connect(mapStateToProps, actions)(Barcos)
