@@ -1,5 +1,4 @@
 import React from 'react'
-
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
@@ -7,7 +6,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 
-const Barcos = ({
+const ConfirmationDialog = ({
   open = false,
   handleClose,
   handleConfirm,
@@ -16,18 +15,18 @@ const Barcos = ({
   confirmText = 'Confirmar',
   cancelText = 'Cancelar',
 }) => {
-  const dialogTitle = title ? <DialogTitle id="alert-dialog-title">{title}</DialogTitle> : ''
+  const dialogTitle = title ? <DialogTitle id="confirmation-dialog-title">{title}</DialogTitle> : ''
   return (
     <Dialog
       fullScreen={false}
       open={open}
       onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
+      aria-labelledby="confirmation-dialog-title"
+      aria-describedby="confirmation-dialog-description"
     >
       <DialogContent>
         {dialogTitle}
-        <DialogContentText id="alert-dialog-description">
+        <DialogContentText id="confirmation-dialog-description">
           {content}
         </DialogContentText>
       </DialogContent>
@@ -43,4 +42,4 @@ const Barcos = ({
   )
 }
 
-export default Barcos
+export default ConfirmationDialog

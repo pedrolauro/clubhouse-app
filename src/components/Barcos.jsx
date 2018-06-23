@@ -5,38 +5,21 @@ import Edit from '@material-ui/icons/Edit'
 import Delete from '@material-ui/icons/Delete'
 import HighlightOff from '@material-ui/icons/HighlightOff'
 
-// import ListItemText from '@material-ui/core/ListItemText'
-// import ListItem from '@material-ui/core/ListItem'
-// import List from '@material-ui/core/List'
-// import Divider from '@material-ui/core/Divider'
-// import AppBar from '@material-ui/core/AppBar'
-// import Toolbar from '@material-ui/core/Toolbar'
-// import IconButton from '@material-ui/core/IconButton'
-// import Typography from '@material-ui/core/Typography'
-// import CloseIcon from '@material-ui/icons/Close'
-// import Slide from '@material-ui/core/Slide'
+import ListItemText from '@material-ui/core/ListItemText'
+import ListItem from '@material-ui/core/ListItem'
+import List from '@material-ui/core/List'
+import Divider from '@material-ui/core/Divider'
 
+import FormDialog from './common/FormDialog'
 import ConfirmationDialog from './common/ConfirmationDialog'
 import EnhancedTable from './common/EnhancedTable'
 import * as actions from '../actions'
 import { barcoToString } from '../helpers'
 
-// const styles = {
-//   appBar: {
-//     position: 'relative',
-//   },
-//   flex: {
-//     flex: 1,
-//   },
-// }
-
-// function Transition(props) {
-//   return <Slide direction="up" {...props} />
-// }
-
 class Barcos extends Component {
   state = {
     deleteDialogOpened: false,
+    editDialogOpened: false,
     barcoToDelete: undefined,
     metaData: [
       {
@@ -104,8 +87,11 @@ class Barcos extends Component {
   openDeleteDialog = (data) => { this.setState({ deleteDialogOpened: true, barcoToDelete: data }) }
   closeDeleteDialog = () => { this.setState({ deleteDialogOpened: false }) }
 
+  closeEditDialog = () => { this.setState({ editDialogOpened: false }) }
+
   editBarco = (data) => {
     console.log(`edit id ${data.id}, barco ${barcoToString(data)}`)
+    this.setState({ editDialogOpened: true })
   }
 
   enableBarco = (barco) => {
@@ -122,6 +108,7 @@ class Barcos extends Component {
   render() {
     const {
       deleteDialogOpened,
+      editDialogOpened,
       barcoToDelete,
       metaData,
       metaActions,
@@ -129,13 +116,23 @@ class Barcos extends Component {
 
     const { barcos } = this.props
 
-    const deleteDialogcontent = (
+    const deleteDialogContent = (
       <span>{'Tem certeza que deseja deletar o barco '}
         <b>{!barcoToDelete ? '' : barcoToString(barcoToDelete)}</b>?
       </span>
     )
 
-    // let classes = {}
+    const editDialogContent = (
+      <List>
+        <ListItem button>
+          <ListItemText primary="Phone ringtone" secondary="Titania" />
+        </ListItem>
+        <Divider />
+        <ListItem button>
+          <ListItemText primary="Default notification ringtone" secondary="Tethys" />
+        </ListItem>
+      </List>
+    )
 
     return (
       <div>
@@ -148,38 +145,14 @@ class Barcos extends Component {
           open={deleteDialogOpened}
           handleClose={this.closeDeleteDialog}
           handleConfirm={this.deleteBarco}
-          content={deleteDialogcontent}
+          content={deleteDialogContent}
         />
-
-        {/* <Dialog
-          fullScreen={fullScreen}
-          open={this.state.open}
-          onClose={this.handleClose}
-          TransitionComponent={Transition}
-        >
-          <AppBar className={classes.appBar}>
-            <Toolbar>
-              <IconButton color="inherit" onClick={this.handleClose} aria-label="Close">
-                <CloseIcon />
-              </IconButton>
-              <Typography variant="title" color="inherit" className={classes.flex}>
-                Sound
-              </Typography>
-              <Button color="inherit" onClick={this.handleClose}>
-                save
-              </Button>
-            </Toolbar>
-          </AppBar>
-          <List>
-            <ListItem button>
-              <ListItemText primary="Phone ringtone" secondary="Titania" />
-            </ListItem>
-            <Divider />
-            <ListItem button>
-              <ListItemText primary="Default notification ringtone" secondary="Tethys" />
-            </ListItem>
-          </List>
-        </Dialog> */}
+        <FormDialog
+          open={editDialogOpened}
+          handleClose={this.closeEditDialog}
+          handleConfirm={this.closeEditDialog}
+          content={editDialogContent}
+        />
 
       </div>
     )
