@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
 import { Route } from 'react-router-dom'
 
 import { withStyles } from '@material-ui/core/styles'
@@ -16,8 +15,11 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
+import Snackbar from '@material-ui/core/Snackbar'
+import CloseIcon from '@material-ui/icons/Close'
 
 import Logo from './Logo'
+import * as actions from '../actions'
 
 const styles = theme => ({
   root: {
@@ -83,11 +85,28 @@ const styles = theme => ({
   list: {
     padding: 0,
   },
+  snackbarClose: {
+    width: theme.spacing.unit * 4,
+    height: theme.spacing.unit * 4,
+  },
+  snackbar: {
+    position: 'absolute',
+  },
+  snackbarContent: {
+  },
 })
 
 class ResponsiveDrawer extends Component {
   state = {
     mobileOpen: false,
+  }
+
+  componentDidUpdate = (prevProps) => {
+    const { queue: prevQueue } = prevProps.snackbarController
+    const { queue } = this.props.snackbarController
+    if (queue !== prevQueue) {
+      this.props.processSnackbarQueue()
+    }
   }
 
   getMenuClasses = (route, classes) => {
@@ -103,8 +122,7 @@ class ResponsiveDrawer extends Component {
   }
 
   handleRouteChange = (route) => {
-    const { dispatch } = this.props
-    dispatch(push(route.path))
+    this.props.changeRoute(route)
     this.handleDrawerToggle()
   }
 
@@ -136,7 +154,20 @@ class ResponsiveDrawer extends Component {
   )
 
   render() {
-    const { routes, classes, theme } = this.props
+    const {
+      routes,
+      classes,
+      theme,
+      snackbarController: {
+        open: snackbarOpened,
+        data: {
+          key: snackbarKey,
+          message: snackbarMessage,
+          anchor: snackbarAnchor,
+          duration: snackbarDuration,
+        },
+      },
+    } = this.props
 
     return (
       <div className={classes.root}>
@@ -198,15 +229,39 @@ class ResponsiveDrawer extends Component {
             />
           ))}
         </main>
+        <Snackbar
+          key={snackbarKey}
+          anchorOrigin={snackbarAnchor}
+          open={snackbarOpened}
+          autoHideDuration={snackbarDuration}
+          onClose={this.props.hideSnackbar}
+          ContentProps={{
+            'aria-describedby': 'snackbar-message-id',
+            className: classes.snackbarContent,
+          }}
+          message={<span id="snackbar-message-id">{snackbarMessage}</span>}
+          action={
+            <IconButton
+              key="close"
+              aria-label="Fechar"
+              color="inherit"
+              className={classes.snackbarClose}
+              onClick={this.props.hideSnackbar}
+            >
+              <CloseIcon />
+            </IconButton>
+          }
+          className={classes.snackbar}
+        />
       </div>
     )
   }
 }
 
-const mapStateToProps = ({ controller }) => {
-  const { location } = controller.router
-  return { location }
-}
+const mapStateToProps = ({ controller }) => ({
+  location: controller.router,
+  snackbarController: controller.snackbar,
+})
 
 const ThemedResponsiveDrawer = withStyles(styles, { withTheme: true })(ResponsiveDrawer)
-export default connect(mapStateToProps)(ThemedResponsiveDrawer)
+export default connect(mapStateToProps, actions)(ThemedResponsiveDrawer)
