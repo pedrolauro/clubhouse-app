@@ -60,7 +60,7 @@ export const subscribeFetchBarcos = () => async (dispatch) => {
     barcosRef.on('value', (snapshot) => {
       dispatch({
         type: 'FETCH_BARCOS',
-        payload: snapshot.val(),
+        payload: helpers.convertFirebaseMacro(snapshot.val()),
       })
     })
 
@@ -78,8 +78,32 @@ export const unsubscribeFetchBarcos = () => (dispatch, getState) => {
   }
 }
 
-export const addBarco = newBarco => async () => {
-  barcosRef.push().set(newBarco)
+export const addBarco = () => async () => {
+  // barcosRef.push().set({
+  //   "tipo": "4x/4-",
+  //   "classePeso": "leve",
+  //   "cor": "azul",
+  //   "detalhe": "china",
+  //   "manutencao": true
+  // })
+  // dispatch({
+  //   type: 'REQUEST_DELETE_BARCO',
+  //   payload: data,
+  // })
+  // barcosRef.child(data.id).remove()
+  //   .then(() => {
+  //     const message = <span>{helpers.barcoToString(data)}<b> apagado</b></span>
+  //     dispatch({
+  //       type: 'SUCCESS_DELETE_BARCO',
+  //       payload: { message },
+  //     })
+  //   })
+  //   .catch((err) => {
+  //     dispatch({
+  //       type: 'ERROR_DELETE_BARCO',
+  //       payload: err,
+  //     })
+  //   })
 }
 
 export const deleteBarco = data => async (dispatch) => {
@@ -87,7 +111,7 @@ export const deleteBarco = data => async (dispatch) => {
     type: 'REQUEST_DELETE_BARCO',
     payload: data,
   })
-  barcosRef.child(data.id).remove()
+  barcosRef.child(data.$id).remove()
     .then(() => {
       const message = <span>{helpers.barcoToString(data)}<b> apagado</b></span>
       dispatch({
@@ -108,7 +132,7 @@ export const changeServiceBarco = data => async (dispatch) => {
     type: 'REQUEST_CHANGE_SERVICE_BARCO',
     payload: data,
   })
-  barcosRef.child(`${data.id}/manutencao`).set(!data.manutencao)
+  barcosRef.child(`${data.$id}/manutencao`).set(!data.manutencao)
     .then(() => {
       const message = (
         <span>

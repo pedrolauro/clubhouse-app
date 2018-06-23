@@ -1,7 +1,7 @@
 const barcosReducer = (state = [], { type, payload }) => {
   switch (type) {
     case 'FETCH_BARCOS':
-      return payload ? Object.values(payload) : []
+      return payload
 
     default:
       return state

@@ -26,13 +26,13 @@ class EnhancedTable extends Component {
 
   handleClick = row => (event) => {
     const anchorEl = { ...this.state.anchorEl }
-    anchorEl[row.id] = event.currentTarget
+    anchorEl[row.$id] = event.currentTarget
     this.setState({ anchorEl })
   }
 
   handleClose = (row) => {
     const anchorEl = { ...this.state.anchorEl }
-    anchorEl[row.id] = null
+    anchorEl[row.$id] = null
     this.setState({ anchorEl })
   }
 
@@ -80,16 +80,16 @@ class EnhancedTable extends Component {
     <TableCell>
       <IconButton
         aria-label="Ações"
-        aria-owns={anchorEl[row.id] ? `menu-item-${row.id}` : null}
+        aria-owns={anchorEl[row.$id] ? `menu-item-${row.$id}` : null}
         aria-haspopup="true"
         onClick={this.handleClick(row)}
       >
         <MoreVertIcon />
       </IconButton>
       <Menu
-        id={`menu-item-${row.id}`}
-        anchorEl={anchorEl[row.id]}
-        open={!!anchorEl[row.id]}
+        id={`menu-item-${row.$id}`}
+        anchorEl={anchorEl[row.$id]}
+        open={!!anchorEl[row.$id]}
         onClose={() => this.handleClose(row)}
       >
         {actions.map(action => (
@@ -153,7 +153,7 @@ class EnhancedTable extends Component {
         </TableHead>
         <TableBody>
           {orderedData.map(row => (
-            <TableRow key={row.id}>
+            <TableRow key={row.$id}>
               {metaData.map(column => this.printTableCell({ row, column }))}
               {this.printActionsMenu({ anchorEl, actions, row })}
             </TableRow>
