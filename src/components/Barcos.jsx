@@ -18,9 +18,6 @@ import { barcoToString } from '../helpers'
 
 class Barcos extends Component {
   state = {
-    deleteDialogOpened: false,
-    editDialogOpened: false,
-    barcoToDelete: undefined,
     metaData: [
       {
         id: 'tipo',
@@ -59,72 +56,59 @@ class Barcos extends Component {
         id: 'manutencao',
         label: 'Em manutenção?',
         icon: <HighlightOff />,
-        onClick: (data) => { this.enableBarco(data) },
+        onClick: (data) => { this.props.enableBarco(data) },
       },
       {
         id: 'edit',
         label: 'Editar',
         icon: <Edit />,
-        onClick: (data) => { this.editBarco(data) },
+        onClick: (data) => { this.props.openBarcoForm(data) },
       },
       {
         id: 'delete',
         label: 'Apagar',
         icon: <Delete />,
-        onClick: (data) => { this.openDeleteDialog(data) },
+        onClick: (data) => { this.props.openBarcoDeletion(data) },
       },
     ],
   }
 
-  componentDidMount() {
-    this.props.subscribeFetchBarcos()
-  }
+  componentDidMount = () => { this.props.subscribeFetchBarcos() }
 
-  componentWillUnmount() {
-    this.props.unsubscribeFetchBarcos()
-  }
-
-  openDeleteDialog = (data) => { this.setState({ deleteDialogOpened: true, barcoToDelete: data }) }
-  closeDeleteDialog = () => { this.setState({ deleteDialogOpened: false }) }
-
-  closeEditDialog = () => { this.setState({ editDialogOpened: false }) }
-
-  editBarco = (data) => {
-    console.log(`edit id ${data.id}, barco ${barcoToString(data)}`)
-    this.setState({ editDialogOpened: true })
-  }
-
-  enableBarco = (barco) => {
-    this.props.enableBarco(barco.id, !barco.manutencao)
-  }
+  componentWillUnmount = () => { this.props.unsubscribeFetchBarcos() }
 
   deleteBarco = () => {
-    const { barcoToDelete } = this.state
-    this.props.deleteBarco(barcoToDelete.id)
-    this.setState({ barcoToDelete: undefined })
-    this.closeDeleteDialog()
+    const { target } = this.props.controller.deleteDialog
+    this.props.deleteBarco(target)
+    this.props.closeBarcoDeletion()
   }
 
   render() {
-    const {
-      deleteDialogOpened,
-      editDialogOpened,
-      barcoToDelete,
-      metaData,
-      metaActions,
-    } = this.state
+    const { metaData, metaActions } = this.state
 
-    const { barcos } = this.props
+    const {
+      data,
+      controller: {
+        deleteDialog: {
+          open: deleteDialogOpened,
+          target: deleteTarget,
+          lastTarget: deleteLastTarget,
+        },
+        formDialog: {
+          open: formDialogOpened,
+        },
+      },
+    } = this.props
 
     const deleteDialogContent = (
       <span>{'Tem certeza que deseja deletar o barco '}
-        <b>{!barcoToDelete ? '' : barcoToString(barcoToDelete)}</b>?
+        <b>{barcoToString(deleteLastTarget || deleteTarget)}</b>?
       </span>
     )
 
-    const editDialogTitle = 'Editar barco'
+    const formDialogTitle = 'Editar barco'
 
-    const editDialogContent = (
+    const formDialogContent = (
       <List>
         <ListItem button>
           <ListItemText primary="Phone ringtone" secondary="Titania" />
@@ -140,21 +124,22 @@ class Barcos extends Component {
       <div>
         <EnhancedTable
           metaData={metaData}
-          data={barcos}
+          data={data}
           actions={metaActions}
         />
         <ConfirmationDialog
           open={deleteDialogOpened}
-          handleClose={this.closeDeleteDialog}
+          confirmText="Apagar"
+          handleClose={this.props.closeBarcoDeletion}
           handleConfirm={this.deleteBarco}
           content={deleteDialogContent}
         />
         <FormDialog
-          open={editDialogOpened}
-          handleClose={this.closeEditDialog}
-          handleConfirm={this.closeEditDialog}
-          title={editDialogTitle}
-          content={editDialogContent}
+          open={formDialogOpened}
+          handleClose={this.props.closeBarcoForm}
+          handleConfirm={this.props.closeBarcoForm}
+          title={formDialogTitle}
+          content={formDialogContent}
         />
 
       </div>
@@ -162,6 +147,9 @@ class Barcos extends Component {
   }
 }
 
-const mapStateToProps = ({ data }) => ({ barcos: data.barcos })
+const mapStateToProps = ({ data, controller }) => ({
+  data: data.barcos,
+  controller: controller.barcos,
+})
 
 export default connect(mapStateToProps, actions)(Barcos)

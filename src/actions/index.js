@@ -1,5 +1,26 @@
 import { barcosRef } from '../config/firebase'
 
+/**
+ * BARCOS ACTIONS
+ */
+export const openBarcoDeletion = data => ({
+  type: 'OPEN_BARCO_DELETION',
+  payload: data,
+})
+
+export const closeBarcoDeletion = () => ({
+  type: 'CLOSE_BARCO_DELETION',
+})
+
+export const openBarcoForm = data => ({
+  type: 'OPEN_BARCO_FORM',
+  payload: data,
+})
+
+export const closeBarcoForm = () => ({
+  type: 'CLOSE_BARCO_FORM',
+})
+
 export const subscribeFetchBarcos = () => async (dispatch) => {
   const subscriber =
     barcosRef.on('value', (snapshot) => {
@@ -29,10 +50,14 @@ export const addBarco = newBarco => async () => {
   barcosRef.push().set(newBarco)
 }
 
-export const deleteBarco = barcoId => async () => {
-  barcosRef.child(barcoId).remove()
+export const deleteBarco = data => async (dispatch) => {
+  barcosRef.child(data.id).remove()
+  dispatch({
+    type: 'DELETE_BARCO',
+    payload: data,
+  })
 }
 
-export const enableBarco = (barcoId, enable) => async () => {
-  barcosRef.child(`${barcoId}/manutencao`).set(enable)
+export const enableBarco = data => async () => {
+  barcosRef.child(`${data.id}/manutencao`).set(!data.manutencao)
 }
