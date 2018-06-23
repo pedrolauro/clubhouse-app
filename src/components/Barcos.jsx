@@ -11,6 +11,7 @@ import List from '@material-ui/core/List'
 import Divider from '@material-ui/core/Divider'
 import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
+import Tooltip from '@material-ui/core/Tooltip'
 import { withStyles } from '@material-ui/core/styles'
 
 import FormDialog from './common/FormDialog'
@@ -183,9 +184,17 @@ class Barcos extends Component {
           title={formDialogTitle}
           content={formDialogContent}
         />
-        <Button variant="fab" className={fabClassName} color="secondary">
-          <AddIcon />
-        </Button>
+        <Tooltip id="tooltip-fab" title="Adicionar">
+          <Button
+            variant="fab"
+            aria-label="Adicionar"
+            color="primary"
+            className={fabClassName}
+            onClick={this.props.addBarco}
+          >
+            <AddIcon />
+          </Button>
+        </Tooltip>
       </div>
     )
   }

@@ -78,32 +78,32 @@ export const unsubscribeFetchBarcos = () => (dispatch, getState) => {
   }
 }
 
-export const addBarco = () => async () => {
-  // barcosRef.push().set({
-  //   "tipo": "4x/4-",
-  //   "classePeso": "leve",
-  //   "cor": "azul",
-  //   "detalhe": "china",
-  //   "manutencao": true
-  // })
-  // dispatch({
-  //   type: 'REQUEST_DELETE_BARCO',
-  //   payload: data,
-  // })
-  // barcosRef.child(data.id).remove()
-  //   .then(() => {
-  //     const message = <span>{helpers.barcoToString(data)}<b> apagado</b></span>
-  //     dispatch({
-  //       type: 'SUCCESS_DELETE_BARCO',
-  //       payload: { message },
-  //     })
-  //   })
-  //   .catch((err) => {
-  //     dispatch({
-  //       type: 'ERROR_DELETE_BARCO',
-  //       payload: err,
-  //     })
-  //   })
+export const addBarco = () => async (dispatch) => {
+  const data = {
+    tipo: '4x/4-',
+    classePeso: 'leve',
+    cor: 'azul',
+    detalhe: 'china',
+    manutencao: true,
+  }
+  dispatch({
+    type: 'REQUEST_ADD_BARCO',
+    payload: data,
+  })
+  barcosRef.push(data)
+    .then(() => {
+      const message = <span>{helpers.barcoToString(data)}<b> adicionado</b></span>
+      dispatch({
+        type: 'SUCCESS_ADD_BARCO',
+        payload: { message },
+      })
+    })
+    .catch((err) => {
+      dispatch({
+        type: 'ERROR_ADD_BARCO',
+        payload: err,
+      })
+    })
 }
 
 export const deleteBarco = data => async (dispatch) => {
