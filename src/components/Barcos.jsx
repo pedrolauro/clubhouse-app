@@ -122,6 +122,8 @@ class Barcos extends Component {
       </span>
     )
 
+    const editDialogTitle = 'Editar barco'
+
     const editDialogContent = (
       <List>
         <ListItem button>
@@ -151,6 +153,7 @@ class Barcos extends Component {
           open={editDialogOpened}
           handleClose={this.closeEditDialog}
           handleConfirm={this.closeEditDialog}
+          title={editDialogTitle}
           content={editDialogContent}
         />
 

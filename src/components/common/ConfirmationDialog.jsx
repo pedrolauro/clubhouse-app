@@ -15,7 +15,9 @@ const ConfirmationDialog = ({
   confirmText = 'Confirmar',
   cancelText = 'Cancelar',
 }) => {
-  const dialogTitle = title ? <DialogTitle id="confirmation-dialog-title">{title}</DialogTitle> : ''
+  const dialogTitle = !title ? '' : (
+    <DialogTitle id="confirmation-dialog-title">{title}</DialogTitle>
+  )
   return (
     <Dialog
       fullScreen={false}
@@ -31,10 +33,10 @@ const ConfirmationDialog = ({
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} variant="outlined" color="primary">
+        <Button onClick={handleClose} color="primary">
           {cancelText}
         </Button>
-        <Button onClick={handleConfirm} variant="raised" color="primary" autoFocus>
+        <Button onClick={handleConfirm} color="primary" variant="raised" autoFocus>
           {confirmText}
         </Button>
       </DialogActions>
