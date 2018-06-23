@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import Edit from '@material-ui/icons/Edit'
 import Delete from '@material-ui/icons/Delete'
-import HighlightOff from '@material-ui/icons/HighlightOff'
+import Build from '@material-ui/icons/Build'
 
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItem from '@material-ui/core/ListItem'
@@ -54,8 +54,8 @@ class Barcos extends Component {
     metaActions: [
       {
         id: 'manutencao',
-        label: 'Em manutenção?',
-        icon: <HighlightOff />,
+        label: 'Manutenção',
+        icon: <Build />,
         onClick: (data) => { this.props.enableBarco(data) },
       },
       {
