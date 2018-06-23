@@ -64,11 +64,6 @@ const styles = theme => ({
     height: '100vh',
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    // padding: theme.spacing.unit * 2,
-    // [theme.breakpoints.down('sm')]: {
-    //   padding: 0,
-    //   paddingTop: '1px',
-    // },
   },
   menu: {
     borderLeft: '5px solid transparent',
