@@ -110,8 +110,8 @@ class ResponsiveDrawer extends Component {
   }
 
   getMenuClasses = (route, classes) => {
-    const { location } = this.props
-    if (location.pathname === route.path) {
+    const { pathname } = this.props.location
+    if (pathname === route.path) {
       return classes.menuActive
     }
     return classes.menu
@@ -259,7 +259,7 @@ class ResponsiveDrawer extends Component {
 }
 
 const mapStateToProps = ({ controller }) => ({
-  location: controller.router,
+  location: controller.router.location,
   snackbarController: controller.snackbar,
 })
 
