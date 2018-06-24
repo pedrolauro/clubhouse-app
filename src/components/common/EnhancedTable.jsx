@@ -11,11 +11,66 @@ import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
-
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
+import Hidden from '@material-ui/core/Hidden'
+import { withStyles } from '@material-ui/core/styles'
 
-// import Hidden from '@material-ui/core/Hidden'
+const styles = theme => ({
+  table: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex',
+      flexFlow: 'column',
+    },
+  },
+  head: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex',
+      justifyContent: 'stretch',
+      alignItems: 'stretch',
+    },
+  },
+  headRow: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex',
+      width: '100%',
+      // alignItems: 'stretch',
+    },
+  },
+  body: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex',
+      flexFlow: 'column',
+    },
+  },
+  bodyRow: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex',
+      alignItems: 'stretch',
+      height: '100%',
+    },
+  },
+  cell: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex',
+      flex: 1,
+      alignItems: 'center',
+    },
+  },
+})
+
+const orderData = ({ data, order, orderBy }) => {
+  if (!data || data.length === 0) {
+    return []
+  }
+  if (!order || !orderBy) {
+    return data
+  }
+
+  return order === 'desc'
+    ? [...data].sort((a, b) => (b[orderBy] < a[orderBy] ? -1 : 1))
+    : [...data].sort((a, b) => (a[orderBy] < b[orderBy] ? -1 : 1))
+}
 
 class EnhancedTable extends Component {
   state = {
@@ -47,20 +102,8 @@ class EnhancedTable extends Component {
     this.setState({ order, orderBy })
   }
 
-  orderData = ({ data, order, orderBy }) => {
-    if (!data || data.length === 0) {
-      return []
-    }
-    if (!order || !orderBy) {
-      return data
-    }
-
-    return order === 'desc'
-      ? [...data].sort((a, b) => (b[orderBy] < a[orderBy] ? -1 : 1))
-      : [...data].sort((a, b) => (a[orderBy] < b[orderBy] ? -1 : 1))
-  }
-
-  printTableCell = ({ row, column }) => {
+  renderTableCell = ({ row, column }) => {
+    const { classes } = this.props
     let value = row[column.id]
     if (column.valueAdapter) {
       value = column.valueAdapter(value)
@@ -69,6 +112,7 @@ class EnhancedTable extends Component {
     return (
       <TableCell
         key={column.id}
+        className={classes.cell}
         numeric={column.numeric}
       >
         {value}
@@ -76,59 +120,52 @@ class EnhancedTable extends Component {
     )
   }
 
-  printActionsMenu = ({ anchorEl, actions, row }) => (
-    <TableCell>
-      <IconButton
-        aria-label="Ações"
-        aria-owns={anchorEl[row.$id] ? `menu-item-${row.$id}` : null}
-        aria-haspopup="true"
-        onClick={this.handleClick(row)}
-      >
-        <MoreVertIcon />
-      </IconButton>
-      <Menu
-        id={`menu-item-${row.$id}`}
-        anchorEl={anchorEl[row.$id]}
-        open={!!anchorEl[row.$id]}
-        onClose={() => this.handleClose(row)}
-      >
-        {actions.map(action => (
-          <MenuItem
-            key={action.id}
-            onClick={() => action.onClick(row) || this.handleClose(row)}
-          >
-            <ListItemIcon>
-              {action.icon}
-            </ListItemIcon>
-            <ListItemText primary={action.label} />
-          </MenuItem>
-        ), this)}
-      </Menu>
-    </TableCell>
-  )
-
-  render() {
-    const {
-      data,
-      metaData,
-      actions,
-    } = this.props
-
-    const {
-      order,
-      orderBy,
-      anchorEl,
-    } = this.state
-
-    const orderedData = this.orderData({ data, order, orderBy })
-
+  renderActionsMenu = (row) => {
+    const { classes, actions } = this.props
+    const { anchorEl } = this.state
     return (
-      <Table>
-        <TableHead>
-          <TableRow>
+      <TableCell className={classes.cell}>
+        <IconButton
+          aria-label="Ações"
+          aria-owns={anchorEl[row.$id] ? `menu-item-${row.$id}` : null}
+          aria-haspopup="true"
+          onClick={this.handleClick(row)}
+        >
+          <MoreVertIcon />
+        </IconButton>
+        <Menu
+          id={`menu-item-${row.$id}`}
+          anchorEl={anchorEl[row.$id]}
+          open={!!anchorEl[row.$id]}
+          onClose={() => this.handleClose(row)}
+        >
+          {actions.map(action => (
+            <MenuItem
+              key={action.id}
+              onClick={() => action.onClick(row) || this.handleClose(row)}
+            >
+              <ListItemIcon>
+                {action.icon}
+              </ListItemIcon>
+              <ListItemText primary={action.label} />
+            </MenuItem>
+          ), this)}
+        </Menu>
+      </TableCell>
+    )
+  }
+
+  renderHead = () => {
+    const { classes, metaData } = this.props
+    const { order, orderBy } = this.state
+    return (
+      <Hidden smDown implementation="css">
+        <TableHead className={classes.head}>
+          <TableRow className={classes.headRow}>
             {metaData.map(column => (
               <TableCell
                 key={column.id}
+                className={classes.cell}
                 numeric={column.numeric}
                 padding={column.disablePadding ? 'none' : 'default'}
                 sortDirection={orderBy === column.id ? order : false}
@@ -148,14 +185,30 @@ class EnhancedTable extends Component {
                 </Tooltip>
               </TableCell>
             ))}
-            <TableCell padding="default" />
+            <TableCell padding="default" className={classes.cell} />
           </TableRow>
         </TableHead>
-        <TableBody>
+      </Hidden>
+    )
+  }
+
+  render() {
+    const {
+      classes,
+      data,
+      metaData,
+    } = this.props
+
+    const { order, orderBy } = this.state
+    const orderedData = orderData({ data, order, orderBy })
+    return (
+      <Table className={classes.table}>
+        {this.renderHead()}
+        <TableBody className={classes.body}>
           {orderedData.map(row => (
-            <TableRow key={row.$id}>
-              {metaData.map(column => this.printTableCell({ row, column }))}
-              {this.printActionsMenu({ anchorEl, actions, row })}
+            <TableRow key={row.$id} className={classes.bodyRow}>
+              {metaData.map(column => this.renderTableCell({ row, column }))}
+              {this.renderActionsMenu(row)}
             </TableRow>
           ))}
         </TableBody>
@@ -164,4 +217,4 @@ class EnhancedTable extends Component {
   }
 }
 
-export default EnhancedTable
+export default withStyles(styles, { withTheme: true })(EnhancedTable)

@@ -73,7 +73,7 @@ class Barcos extends Component {
       },
       {
         id: 'detalhe',
-        numeric: false,
+        numeric: true,
         disablePadding: false,
         label: 'Detalhe',
       },
