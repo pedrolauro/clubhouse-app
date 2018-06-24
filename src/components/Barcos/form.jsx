@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-// import classNames from 'classnames'
+import classNames from 'classnames'
 
 import { withStyles } from '@material-ui/core/styles'
 import withMobileDialog from '@material-ui/core/withMobileDialog'
@@ -25,21 +25,22 @@ const styles = theme => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    alignContent: 'center',
-    alignItems: 'center',
     margin: `0 ${theme.spacing.unit * 4}px ${theme.spacing.unit * 4}px`,
     [theme.breakpoints.down('sm')]: {
       margin: `0 ${theme.spacing.unit * 2}px`,
     },
   },
   formControl: {
-    minWidth: 200,
-    flex: '1 0 auto',
     margin: theme.spacing.unit * 4,
     [theme.breakpoints.down('sm')]: {
       margin: theme.spacing.unit * 2,
     },
+  },
+  sm: {
+    minWidth: 150,
+  },
+  lg: {
+    minWidth: 250,
   },
 })
 
@@ -89,7 +90,7 @@ class BarcosForm extends Component {
         <FormControl
           fullWidth={fullScreen}
           marging="normal"
-          className={classes.formControl}
+          className={classNames(classes.formControl, classes.sm)}
         >
           <InputLabel htmlFor="select-multiple-checkbox">Tipo</InputLabel>
           <Select
@@ -112,7 +113,7 @@ class BarcosForm extends Component {
           label="Peso"
           marging="normal"
           fullWidth={fullScreen}
-          className={classes.formControl}
+          className={classNames(classes.formControl, classes.lg)}
           value={formData.peso}
           onChange={this.handleChange('peso')}
         />
@@ -120,7 +121,7 @@ class BarcosForm extends Component {
           label="Cores"
           marging="normal"
           fullWidth={fullScreen}
-          className={classes.formControl}
+          className={classNames(classes.formControl, classes.lg)}
           value={formData.cores}
           onChange={this.handleChange('cores')}
         />
@@ -128,15 +129,14 @@ class BarcosForm extends Component {
           label="Detalhes"
           marging="normal"
           fullWidth={fullScreen}
-          className={classes.formControl}
+          className={classNames(classes.formControl, classes.lg)}
           value={formData.detalhe}
           onChange={this.handleChange('detalhe')}
         />
-        {/* color="primary" */}
         <FormControl
           fullWidth={fullScreen}
           marging="normal"
-          className={classes.formControl}
+          className={classNames(classes.formControl, classes.sm)}
         >
           <FormControlLabel
             label={
