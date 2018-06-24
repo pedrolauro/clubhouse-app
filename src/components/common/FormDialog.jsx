@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography'
 import CloseIcon from '@material-ui/icons/Close'
 import Slide from '@material-ui/core/Slide'
 import { withStyles } from '@material-ui/core/styles'
-import withMobileDialog from '@material-ui/core/withMobileDialog'
+// import withMobileDialog from '@material-ui/core/withMobileDialog'
 
 const styles = {
   appBar: {
@@ -79,4 +79,5 @@ const FormDialog = ({
   )
 }
 
-export default withMobileDialog()(withStyles(styles)(FormDialog))
+// export default withMobileDialog()(withStyles(styles)(FormDialog))
+export default withStyles(styles)(FormDialog)

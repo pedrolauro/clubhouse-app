@@ -1,4 +1,13 @@
-const tiposBarcos = ['1x', '2x', '2-', '2+', '4x', '4-', '4+', '8+']
+const tiposBarcos = [
+  '1x',
+  '2+',
+  '2-',
+  '2x',
+  '4+',
+  '4-',
+  '4x',
+  '8+',
+]
 
 const categorias = [
   {

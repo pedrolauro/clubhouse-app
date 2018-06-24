@@ -80,7 +80,7 @@ export const unsubscribeFetchBarcos = () => (dispatch, getState) => {
 
 export const addBarco = () => async (dispatch) => {
   const data = {
-    tipo: '4x/4-',
+    tipo: ['4x', '4-'],
     classePeso: 'leve',
     cor: 'azul',
     detalhe: 'china',

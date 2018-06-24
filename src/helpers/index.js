@@ -1,5 +1,9 @@
 export const barcoToString = (barco = {}) => `${barco.tipo || ''} ${barco.classePeso || ''} ${barco.cor || ''}`
 
+export const tiposBarcoToString = (tiposBarcos = []) => tiposBarcos.sort().join('/')
+
+export const manutencaoBarcoToString = (manutencao = false) => manutencao ? 'Sim' : 'Não'
+
 export const convertFirebaseMacro = (macro) => {
   const list = []
   if (macro) {
@@ -9,3 +13,5 @@ export const convertFirebaseMacro = (macro) => {
   }
   return list
 }
+
+export const isValueInArray = (value, array) => !array || array.indexOf(value) > -1

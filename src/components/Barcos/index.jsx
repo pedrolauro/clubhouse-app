@@ -5,20 +5,16 @@ import classNames from 'classnames'
 import Edit from '@material-ui/icons/Edit'
 import Delete from '@material-ui/icons/Delete'
 import Build from '@material-ui/icons/Build'
-import ListItemText from '@material-ui/core/ListItemText'
-import ListItem from '@material-ui/core/ListItem'
-import List from '@material-ui/core/List'
-import Divider from '@material-ui/core/Divider'
 import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
 import Tooltip from '@material-ui/core/Tooltip'
 import { withStyles } from '@material-ui/core/styles'
 
-import FormDialog from '../common/FormDialog'
+import BarcoForm from './form'
 import ConfirmationDialog from '../common/ConfirmationDialog'
 import EnhancedTable from '../common/EnhancedTable'
 import * as actions from '../../actions'
-import { barcoToString } from '../../helpers'
+import { barcoToString, tiposBarcoToString, manutencaoBarcoToString } from '../../helpers'
 
 const styles = theme => ({
   fab: {
@@ -58,6 +54,7 @@ class Barcos extends Component {
         numeric: false,
         disablePadding: false,
         label: 'Tipo',
+        valueAdapter: value => tiposBarcoToString(value),
       },
       {
         id: 'classePeso',
@@ -73,7 +70,7 @@ class Barcos extends Component {
       },
       {
         id: 'detalhe',
-        numeric: true,
+        numeric: false,
         disablePadding: false,
         label: 'Detalhe',
       },
@@ -82,7 +79,7 @@ class Barcos extends Component {
         numeric: false,
         disablePadding: false,
         label: 'Em manutenção?',
-        valueAdapter: value => value ? 'Sim' : 'Não',
+        valueAdapter: value => manutencaoBarcoToString(value),
       },
     ],
     metaActions: [
@@ -132,9 +129,6 @@ class Barcos extends Component {
           target: deleteTarget,
           lastTarget: deleteLastTarget,
         },
-        formDialog: {
-          open: formDialogOpened,
-        },
       },
     } = this.props
 
@@ -147,20 +141,6 @@ class Barcos extends Component {
       <span>{'Tem certeza que deseja deletar o barco '}
         <b>{barcoToString(deleteLastTarget || deleteTarget)}</b>?
       </span>
-    )
-
-    const formDialogTitle = 'Editar barco'
-
-    const formDialogContent = (
-      <List>
-        <ListItem button>
-          <ListItemText primary="Phone ringtone" secondary="Titania" />
-        </ListItem>
-        <Divider />
-        <ListItem button>
-          <ListItemText primary="Default notification ringtone" secondary="Tethys" />
-        </ListItem>
-      </List>
     )
 
     return (
@@ -177,20 +157,14 @@ class Barcos extends Component {
           handleConfirm={this.deleteBarco}
           content={deleteDialogContent}
         />
-        <FormDialog
-          open={formDialogOpened}
-          handleClose={this.props.closeBarcoForm}
-          handleConfirm={this.props.closeBarcoForm}
-          title={formDialogTitle}
-          content={formDialogContent}
-        />
+        <BarcoForm />
         <Tooltip id="tooltip-fab" title="Adicionar">
           <Button
             variant="fab"
             aria-label="Adicionar"
             color="primary"
             className={fabClassName}
-            onClick={this.props.addBarco}
+            onClick={this.props.openBarcoForm}
           >
             <AddIcon />
           </Button>
