@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import classNames from 'classnames'
 
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -14,6 +15,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import Hidden from '@material-ui/core/Hidden'
+import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({
@@ -21,20 +23,6 @@ const styles = theme => ({
     [theme.breakpoints.down('sm')]: {
       display: 'flex',
       flexFlow: 'column',
-    },
-  },
-  head: {
-    [theme.breakpoints.down('sm')]: {
-      display: 'flex',
-      justifyContent: 'stretch',
-      alignItems: 'stretch',
-    },
-  },
-  headRow: {
-    [theme.breakpoints.down('sm')]: {
-      display: 'flex',
-      width: '100%',
-      // alignItems: 'stretch',
     },
   },
   body: {
@@ -46,15 +34,33 @@ const styles = theme => ({
   bodyRow: {
     [theme.breakpoints.down('sm')]: {
       display: 'flex',
+      flexWrap: 'wrap',
       alignItems: 'stretch',
       height: '100%',
+      borderBottom: '1px solid rgba(224, 224, 224, 1)',
+      justifyContent: 'space-between',
+      padding: '15px 30px 20px 20px',
+      position: 'relative',
+    },
+  },
+  sideMenu: {
+    [theme.breakpoints.down('sm')]: {
+      position: 'absolute',
+      right: '0',
+      padding: '4px 0 !important',
     },
   },
   cell: {
     [theme.breakpoints.down('sm')]: {
       display: 'flex',
-      flex: 1,
-      alignItems: 'center',
+      flex: '1 0 auto',
+      justifyContent: 'flex-end',
+      minHeight: '48px',
+      boxSizing: 'content-box',
+      borderBottom: '0',
+      padding: '4px 50px 4px 4px',
+      textAlign: 'left',
+      flexDirection: 'column',
     },
   },
 })
@@ -115,7 +121,14 @@ class EnhancedTable extends Component {
         className={classes.cell}
         numeric={column.numeric}
       >
-        {value}
+        <Hidden mdUp implementation="css">
+          <Typography variant="caption">
+            {column.label}
+          </Typography>
+        </Hidden>
+        <Typography variant="body2">
+          {value}
+        </Typography>
       </TableCell>
     )
   }
@@ -124,7 +137,7 @@ class EnhancedTable extends Component {
     const { classes, actions } = this.props
     const { anchorEl } = this.state
     return (
-      <TableCell className={classes.cell}>
+      <TableCell className={classNames(classes.cell, classes.sideMenu)}>
         <IconButton
           aria-label="Ações"
           aria-owns={anchorEl[row.$id] ? `menu-item-${row.$id}` : null}
@@ -156,16 +169,15 @@ class EnhancedTable extends Component {
   }
 
   renderHead = () => {
-    const { classes, metaData } = this.props
+    const { metaData } = this.props
     const { order, orderBy } = this.state
     return (
-      <Hidden smDown implementation="css">
-        <TableHead className={classes.head}>
-          <TableRow className={classes.headRow}>
+      <Hidden smDown implementation="js">
+        <TableHead>
+          <TableRow>
             {metaData.map(column => (
               <TableCell
                 key={column.id}
-                className={classes.cell}
                 numeric={column.numeric}
                 padding={column.disablePadding ? 'none' : 'default'}
                 sortDirection={orderBy === column.id ? order : false}
@@ -185,7 +197,7 @@ class EnhancedTable extends Component {
                 </Tooltip>
               </TableCell>
             ))}
-            <TableCell padding="default" className={classes.cell} />
+            <TableCell padding="default" />
           </TableRow>
         </TableHead>
       </Hidden>
@@ -193,14 +205,10 @@ class EnhancedTable extends Component {
   }
 
   render() {
-    const {
-      classes,
-      data,
-      metaData,
-    } = this.props
-
+    const { classes, data, metaData } = this.props
     const { order, orderBy } = this.state
     const orderedData = orderData({ data, order, orderBy })
+
     return (
       <Table className={classes.table}>
         {this.renderHead()}

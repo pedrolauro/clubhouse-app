@@ -45,6 +45,12 @@ const styles = theme => ({
   space: {
     ...theme.mixins.toolbar,
   },
+  bottomRest: {
+    minHeight: `${theme.spacing.unit * 16}px`,
+    [theme.breakpoints.down('sm')]: {
+      minHeight: `${theme.spacing.unit * 10}px`,
+    },
+  },
   toolbar: {
     ...theme.mixins.toolbar,
     backgroundColor: theme.palette.grey[100],
@@ -192,9 +198,7 @@ class ResponsiveDrawer extends Component {
             anchor={theme.direction === 'rtl' ? 'right' : 'left'}
             open={this.state.mobileOpen}
             onClose={this.handleDrawerToggle}
-            classes={{
-              paper: classes.drawerPaper,
-            }}
+            classes={{ paper: classes.drawerPaper }}
             ModalProps={{
               keepMounted: true, // Better open performance on mobile.
             }}
@@ -204,11 +208,9 @@ class ResponsiveDrawer extends Component {
         </Hidden>
         <Hidden smDown implementation="css">
           <Drawer
-            variant="permanent"
             open
-            classes={{
-              paper: classes.drawerPaper,
-            }}
+            variant="permanent"
+            classes={{ paper: classes.drawerPaper }}
           >
             {this.drawer(routes, classes)}
           </Drawer>
@@ -223,6 +225,7 @@ class ResponsiveDrawer extends Component {
               component={route.bodyComponent}
             />
           ))}
+          <div className={classes.bottomRest} />
         </main>
         <Snackbar
           key={snackbarKey}
