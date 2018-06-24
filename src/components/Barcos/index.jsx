@@ -14,11 +14,11 @@ import AddIcon from '@material-ui/icons/Add'
 import Tooltip from '@material-ui/core/Tooltip'
 import { withStyles } from '@material-ui/core/styles'
 
-import FormDialog from './common/FormDialog'
-import ConfirmationDialog from './common/ConfirmationDialog'
-import EnhancedTable from './common/EnhancedTable'
-import * as actions from '../actions'
-import { barcoToString } from '../helpers'
+import FormDialog from '../common/FormDialog'
+import ConfirmationDialog from '../common/ConfirmationDialog'
+import EnhancedTable from '../common/EnhancedTable'
+import * as actions from '../../actions'
+import { barcoToString } from '../../helpers'
 
 const styles = theme => ({
   fab: {
