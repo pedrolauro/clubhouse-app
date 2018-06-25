@@ -1,3 +1,11 @@
+const initialFormData = {
+  tipos: [],
+  peso: '',
+  cores: '',
+  detalhe: '',
+  manutencao: false,
+}
+
 const initialState = {
   deleteDialog: {
     open: false,
@@ -6,11 +14,10 @@ const initialState = {
   },
   formDialog: {
     open: false,
-    newData: false,
-    target: undefined,
+    target: initialFormData,
+    lastTarget: undefined,
   },
 }
-
 const barcosReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case 'OPEN_BARCO_DELETION':
@@ -37,8 +44,7 @@ const barcosReducer = (state = initialState, { type, payload }) => {
         ...state,
         formDialog: {
           open: true,
-          target: payload,
-          newData: !payload.id,
+          target: payload || initialFormData,
         },
       }
 
@@ -47,7 +53,7 @@ const barcosReducer = (state = initialState, { type, payload }) => {
         ...state,
         formDialog: {
           open: false,
-          target: undefined,
+          target: initialFormData,
           lastTarget: state.formDialog.target,
         },
       }

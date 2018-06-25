@@ -1,6 +1,6 @@
-export const barcoToString = (barco = {}) => `${barco.tipo || ''} ${barco.classePeso || ''} ${barco.cor || ''}`
-
 export const tiposBarcoToString = (tiposBarcos = []) => tiposBarcos.sort().join('/')
+
+export const barcoToString = (barco = {}) => `${tiposBarcoToString(barco.tipos) || ''} ${barco.peso || ''}`
 
 export const manutencaoBarcoToString = (manutencao = false) => manutencao ? 'Sim' : 'Não'
 

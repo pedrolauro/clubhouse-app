@@ -78,29 +78,31 @@ export const unsubscribeFetchBarcos = () => (dispatch, getState) => {
   }
 }
 
-export const addBarco = () => async (dispatch) => {
-  const data = {
-    tipo: ['4x', '4-'],
-    classePeso: 'leve',
-    cor: 'azul',
-    detalhe: 'china',
-    manutencao: true,
-  }
+export const saveBarco = data => async (dispatch) => {
   dispatch({
-    type: 'REQUEST_ADD_BARCO',
+    type: 'REQUEST_SAVE_BARCO',
     payload: data,
   })
-  barcosRef.push(data)
+
+  let promise
+  if (data.$id) {
+    const { $id, ...newData } = data
+    promise = barcosRef.child($id).set(newData)
+  } else {
+    promise = barcosRef.push(data)
+  }
+
+  promise
     .then(() => {
-      const message = <span>{helpers.barcoToString(data)}<b> adicionado</b></span>
+      const message = <span>{helpers.barcoToString(data)}<b> salvo</b></span>
       dispatch({
-        type: 'SUCCESS_ADD_BARCO',
+        type: 'SUCCESS_SAVE_BARCO',
         payload: { message },
       })
     })
     .catch((err) => {
       dispatch({
-        type: 'ERROR_ADD_BARCO',
+        type: 'ERROR_SAVE_BARCO',
         payload: err,
       })
     })

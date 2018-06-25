@@ -7,14 +7,13 @@ import Delete from '@material-ui/icons/Delete'
 import Build from '@material-ui/icons/Build'
 import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
-import Tooltip from '@material-ui/core/Tooltip'
 import { withStyles } from '@material-ui/core/styles'
 
 import BarcoForm from './form'
 import ConfirmationDialog from '../common/ConfirmationDialog'
 import EnhancedTable from '../common/EnhancedTable'
 import * as actions from '../../actions'
-import { barcoToString, tiposBarcoToString, manutencaoBarcoToString } from '../../helpers'
+import * as helpers from '../../helpers'
 
 const styles = theme => ({
   fab: {
@@ -50,23 +49,17 @@ class Barcos extends Component {
   state = {
     metaData: [
       {
-        id: 'tipo',
+        id: 'tipos',
         numeric: false,
         disablePadding: false,
         label: 'Tipo',
-        valueAdapter: value => tiposBarcoToString(value),
+        valueAdapter: value => helpers.tiposBarcoToString(value),
       },
       {
-        id: 'classePeso',
+        id: 'peso',
         numeric: false,
         disablePadding: false,
         label: 'Peso',
-      },
-      {
-        id: 'cor',
-        numeric: false,
-        disablePadding: false,
-        label: 'Cor principal',
       },
       {
         id: 'detalhe',
@@ -75,11 +68,17 @@ class Barcos extends Component {
         label: 'Detalhe',
       },
       {
+        id: 'cores',
+        numeric: false,
+        disablePadding: false,
+        label: 'Cores',
+      },
+      {
         id: 'manutencao',
         numeric: false,
         disablePadding: false,
         label: 'Em manutenção?',
-        valueAdapter: value => manutencaoBarcoToString(value),
+        valueAdapter: value => helpers.manutencaoBarcoToString(value),
       },
     ],
     metaActions: [
@@ -139,7 +138,7 @@ class Barcos extends Component {
 
     const deleteDialogContent = (
       <span>{'Tem certeza que deseja deletar o barco '}
-        <b>{barcoToString(deleteLastTarget || deleteTarget)}</b>?
+        <b>{helpers.barcoToString(deleteLastTarget || deleteTarget)}</b>?
       </span>
     )
 
@@ -158,17 +157,15 @@ class Barcos extends Component {
           content={deleteDialogContent}
         />
         <BarcoForm />
-        <Tooltip id="tooltip-fab" title="Adicionar">
-          <Button
-            variant="fab"
-            aria-label="Adicionar"
-            color="primary"
-            className={fabClassName}
-            onClick={this.props.openBarcoForm}
-          >
-            <AddIcon />
-          </Button>
-        </Tooltip>
+        <Button
+          variant="fab"
+          aria-label="Adicionar"
+          color="primary"
+          className={fabClassName}
+          onClick={() => this.props.openBarcoForm()}
+        >
+          <AddIcon />
+        </Button>
       </div>
     )
   }

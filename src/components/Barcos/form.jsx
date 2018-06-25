@@ -27,7 +27,7 @@ const styles = theme => ({
     flexWrap: 'wrap',
     margin: `0 ${theme.spacing.unit * 4}px ${theme.spacing.unit * 4}px`,
     [theme.breakpoints.down('sm')]: {
-      margin: `0 ${theme.spacing.unit * 2}px`,
+      margin: `${theme.spacing.unit * 2}px`,
     },
   },
   formControl: {
@@ -55,35 +55,41 @@ const TiposBarcosMenuProps = {
   },
 }
 
-const initialFormData = {
-  tipos: [],
-  peso: '',
-  cores: '',
-  detalhe: '',
-  manutencao: false,
-}
-
 class BarcosForm extends Component {
   state = {
-    formData: initialFormData,
+    formData: this.props.controller.target,
   }
-  // formData: this.props.data || initialFormData,
+
+  static getDerivedStateFromProps(props, state) {
+    const { controller: { target } } = props
+    const { formData } = state
+    if (formData !== target) {
+      return { formData: target }
+    }
+    return null
+  }
 
   handleChange = inputId => (event) => {
-    // debugger
     const formData = { ...this.state.formData }
-    formData[inputId] = event.target.value || event.target.checked
+    formData[inputId] = event.target.value
     this.setState({ formData })
+  }
+
+  handleCheck = inputId => (event) => {
+    const formData = { ...this.state.formData }
+    formData[inputId] = event.target.checked
+    this.setState({ formData })
+  }
+
+  handleConfirm = () => {
+    const formData = { ...this.state.formData }
+    this.props.saveBarco(formData)
+    this.props.closeBarcoForm()
   }
 
   renderForm = () => {
     const { formData } = this.state
-
-    const {
-      fullScreen,
-      classes,
-      tiposBarcos,
-    } = this.props
+    const { fullScreen, classes, tiposBarcos } = this.props
 
     return (
       <div className={classes.root}>
@@ -145,7 +151,7 @@ class BarcosForm extends Component {
               </Typography>
             }
             checked={formData.manutencao}
-            onChange={this.handleChange('manutencao')}
+            onChange={this.handleCheck('manutencao')}
             control={<Switch />}
           />
         </FormControl>
@@ -154,14 +160,11 @@ class BarcosForm extends Component {
   }
 
   render() {
-    const title = 'Editar barco'
-
     const {
       fullScreen,
       controller: {
-        formDialog: {
-          open,
-        },
+        open,
+        target,
       },
     } = this.props
 
@@ -170,8 +173,8 @@ class BarcosForm extends Component {
         open={open}
         fullScreen={fullScreen}
         handleClose={this.props.closeBarcoForm}
-        handleConfirm={this.props.addBarco}
-        title={title}
+        handleConfirm={this.handleConfirm}
+        title={target.$id ? 'Editar barco' : 'Novo barco'}
         content={this.renderForm()}
       />
     )
@@ -180,7 +183,7 @@ class BarcosForm extends Component {
 
 const mapStateToProps = ({ data, controller }) => ({
   tiposBarcos: data.immutable.tiposBarcos,
-  controller: controller.barcos,
+  controller: controller.barcos.formDialog,
 })
 
 const EnhancedBarcoForm = withStyles(styles, { withTheme: true })(BarcosForm)
