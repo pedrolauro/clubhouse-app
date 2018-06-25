@@ -31,6 +31,7 @@ const FormDialog = ({
   content,
   confirmText = 'Salvar',
   cancelText = 'Cancelar',
+  maxWidth = 'md',
   classes,
 }) => {
   const topCloseButton = !fullScreen ? '' : (
@@ -56,7 +57,7 @@ const FormDialog = ({
   return (
     <Dialog
       fullWidth
-      maxWidth="sm"
+      maxWidth={maxWidth}
       fullScreen={fullScreen}
       open={open}
       onClose={handleClose}
