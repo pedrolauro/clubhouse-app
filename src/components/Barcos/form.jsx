@@ -15,6 +15,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import Select from '@material-ui/core/Select'
 import Checkbox from '@material-ui/core/Checkbox'
 import Switch from '@material-ui/core/Switch'
+import SaveIcon from '@material-ui/icons/Save'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 
 import FormDialog from '../common/FormDialog'
@@ -168,6 +169,8 @@ class BarcosForm extends Component {
       },
     } = this.props
 
+    const confirmIcon = <SaveIcon />
+
     return (
       <FormDialog
         open={open}
@@ -176,6 +179,7 @@ class BarcosForm extends Component {
         handleConfirm={this.handleConfirm}
         title={target.$id ? 'Editar barco' : 'Novo barco'}
         content={this.renderForm()}
+        confirmIcon={confirmIcon}
       />
     )
   }
