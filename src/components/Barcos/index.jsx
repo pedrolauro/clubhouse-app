@@ -108,8 +108,13 @@ class Barcos extends Component {
   componentWillUnmount = () => { this.props.unsubscribeFetchBarcos() }
 
   deleteBarco = () => {
-    const { target } = this.props.controller.deleteDialog
-    this.props.deleteBarco(target)
+    const {
+      deleteDialogController: {
+        target: deleteTarget,
+      },
+    } = this.props
+
+    this.props.deleteBarco(deleteTarget)
     this.props.closeBarcoDeletion()
   }
 
@@ -119,15 +124,11 @@ class Barcos extends Component {
     const {
       classes,
       data,
-      snackbarController: {
-        open: snackbarOpen,
-      },
-      controller: {
-        deleteDialog: {
-          open: deleteDialogOpened,
-          target: deleteTarget,
-          lastTarget: deleteLastTarget,
-        },
+      snackbarOpen,
+      deleteDialogController: {
+        open: deleteDialogOpened,
+        target: deleteTarget,
+        lastTarget: deleteLastTarget,
       },
     } = this.props
 
@@ -173,8 +174,8 @@ class Barcos extends Component {
 
 const mapStateToProps = ({ data, controller }) => ({
   data: data.barcos,
-  controller: controller.barcos,
-  snackbarController: controller.snackbar,
+  snackbarOpen: controller.snackbar.open,
+  deleteDialogController: controller.barcos.deleteDialog,
 })
 
 export default connect(mapStateToProps, actions)(withStyles(styles, { withTheme: true })(Barcos))

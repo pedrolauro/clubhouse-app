@@ -48,7 +48,7 @@ const styles = theme => ({
   bottomRest: {
     minHeight: `${theme.spacing.unit * 16}px`,
     [theme.breakpoints.down('sm')]: {
-      minHeight: `${theme.spacing.unit * 10}px`,
+      minHeight: `${theme.spacing.unit * 11}px`,
     },
   },
   toolbar: {
