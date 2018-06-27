@@ -15,3 +15,5 @@ export const convertFirebaseMacro = (macro) => {
 }
 
 export const isValueInArray = (value, array) => !array || array.indexOf(value) > -1
+
+export const isStrInBetween = (str, min, max) => str && str.length >= min && str.length <= max

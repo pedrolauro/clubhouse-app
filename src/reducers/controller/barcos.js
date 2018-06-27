@@ -24,6 +24,7 @@ const barcosReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         deleteDialog: {
+          ...state.deleteDialog,
           open: true,
           target: payload,
         },
@@ -33,6 +34,7 @@ const barcosReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         deleteDialog: {
+          ...state.deleteDialog,
           open: false,
           target: undefined,
           lastTarget: state.deleteDialog.target,
@@ -43,8 +45,9 @@ const barcosReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         formDialog: {
+          ...state.formDialog,
           open: true,
-          target: payload || initialFormData,
+          target: payload || { ...initialFormData },
         },
       }
 
@@ -52,8 +55,9 @@ const barcosReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         formDialog: {
+          ...state.formDialog,
           open: false,
-          target: initialFormData,
+          target: { ...initialFormData },
           lastTarget: state.formDialog.target,
         },
       }

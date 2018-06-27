@@ -20,7 +20,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 
 import FormDialog from '../common/FormDialog'
 import * as actions from '../../actions'
-import { tiposBarcoToString, isValueInArray } from '../../helpers'
+import { tiposBarcoToString, isValueInArray, isStrInBetween } from '../../helpers'
 
 const styles = theme => ({
   root: {
@@ -58,43 +58,89 @@ const TiposBarcosMenuProps = {
 
 class BarcosForm extends Component {
   state = {
-    formData: this.props.controller.target,
+    formData: { ...this.props.controller.target },
+    invalidInputIds: [],
+    isValidated: !!this.props.controller.target,
+    /* eslint-disable react/no-unused-state */
+    targetRef: this.props.controller.target,
   }
 
   static getDerivedStateFromProps(props, state) {
     const { controller: { target } } = props
-    const { formData } = state
-    if (formData !== target) {
-      return { formData: target }
+    const { targetRef } = state
+    if (targetRef !== target) {
+      return {
+        formData: { ...target },
+        invalidInputIds: [],
+        isValidated: !!target.$id,
+        targetRef: target,
+      }
     }
     return null
   }
 
-  handleChange = inputId => (event) => {
-    const formData = { ...this.state.formData }
-    formData[inputId] = event.target.value
-    this.setState({ formData })
+  validateForm = () => {
+    const {
+      formData: {
+        tipos,
+        peso,
+        cores,
+        detalhe,
+      },
+    } = this.state
+    const invalidInputIds = []
+    if (tipos.length <= 0) {
+      invalidInputIds.push('tipos')
+    }
+    if (!isStrInBetween(peso, 1, 15)) {
+      invalidInputIds.push('peso')
+    }
+    if (!isStrInBetween(cores, 1, 25)) {
+      invalidInputIds.push('cores')
+    }
+    if (!isStrInBetween(detalhe, 1, 30)) {
+      invalidInputIds.push('detalhe')
+    }
+    return invalidInputIds
   }
 
-  handleCheck = inputId => (event) => {
-    const formData = { ...this.state.formData }
-    formData[inputId] = event.target.checked
-    this.setState({ formData })
+  handleChange = (inputId, check = false) => (event) => {
+    const { formData, isValidated } = this.state
+    if (check) {
+      formData[inputId] = event.target.checked
+    } else {
+      formData[inputId] = event.target.value
+    }
+
+    if (isValidated) {
+      const invalidInputIds = this.validateForm()
+      this.setState({ formData, invalidInputIds })
+    } else {
+      this.setState({ formData })
+    }
   }
 
   handleConfirm = () => {
-    const formData = { ...this.state.formData }
-    this.props.saveBarco(formData)
-    this.props.closeBarcoForm()
+    const { formData } = this.state
+    const invalidInputIds = this.validateForm()
+
+    if (invalidInputIds.length === 0) {
+      const newFormData = { ...formData }
+      this.props.saveBarco(newFormData)
+      this.props.closeBarcoForm()
+    } else {
+      this.setState({ invalidInputIds, isValidated: true })
+    }
   }
 
   renderForm = () => {
-    const { formData } = this.state
+    const { formData, invalidInputIds } = this.state
     const { fullScreen, classes, tiposBarcos } = this.props
 
     return (
       <div className={classes.root}>
         <FormControl
+          error={isValueInArray('tipos', invalidInputIds)}
           fullWidth={fullScreen}
           marging="normal"
           className={classNames(classes.formControl, classes.sm)}
@@ -123,6 +169,7 @@ class BarcosForm extends Component {
           className={classNames(classes.formControl, classes.lg)}
           value={formData.peso}
           onChange={this.handleChange('peso')}
+          error={isValueInArray('peso', invalidInputIds)}
         />
         <TextField
           label="Cores"
@@ -131,6 +178,7 @@ class BarcosForm extends Component {
           className={classNames(classes.formControl, classes.lg)}
           value={formData.cores}
           onChange={this.handleChange('cores')}
+          error={isValueInArray('cores', invalidInputIds)}
         />
         <TextField
           label="Detalhes"
@@ -139,6 +187,7 @@ class BarcosForm extends Component {
           className={classNames(classes.formControl, classes.lg)}
           value={formData.detalhe}
           onChange={this.handleChange('detalhe')}
+          error={isValueInArray('detalhe', invalidInputIds)}
         />
         <FormControl
           fullWidth={fullScreen}
@@ -152,7 +201,7 @@ class BarcosForm extends Component {
               </Typography>
             }
             checked={formData.manutencao}
-            onChange={this.handleCheck('manutencao')}
+            onChange={this.handleChange('manutencao', true)}
             control={<Switch />}
           />
         </FormControl>
