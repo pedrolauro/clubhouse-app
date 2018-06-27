@@ -147,6 +147,7 @@ class Barcos extends Component {
       <div>
         <EnhancedTable
           metaData={metaData}
+          initialSort="tipos"
           data={data}
           actions={metaActions}
         />

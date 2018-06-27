@@ -1,9 +1,9 @@
 
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
-import Sort from '@material-ui/icons/Sort'
-import IconButton from '@material-ui/core/IconButton'
-import Hidden from '@material-ui/core/Hidden'
+// import Sort from '@material-ui/icons/Sort'
+// import IconButton from '@material-ui/core/IconButton'
+// import Hidden from '@material-ui/core/Hidden'
 import { withStyles } from '@material-ui/core/styles'
 
 const styles = () => ({
@@ -20,11 +20,11 @@ const BarcosHeader = ({ classes }) => (
     <Typography variant="title" color="inherit" noWrap>
       Barcos
     </Typography>
-    <Hidden mdUp>
+    {/* <Hidden mdUp>
       <IconButton color="inherit" className={classes.button} aria-label="Ordenar">
         <Sort />
       </IconButton>
-    </Hidden>
+    </Hidden> */}
   </div>
 )
 

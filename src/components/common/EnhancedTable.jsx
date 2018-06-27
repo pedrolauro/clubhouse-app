@@ -81,8 +81,8 @@ const orderData = ({ data, order, orderBy }) => {
 class EnhancedTable extends Component {
   state = {
     anchorEl: {},
-    order: undefined,
-    orderBy: undefined,
+    order: 'asc',
+    orderBy: this.props.initialSort,
   }
 
   handleClick = row => (event) => {
