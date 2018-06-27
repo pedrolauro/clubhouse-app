@@ -3,7 +3,6 @@ const initialFormData = {
   peso: '',
   cores: '',
   detalhe: '',
-  manutencao: false,
 }
 
 const initialState = {

@@ -6,7 +6,6 @@ import { withStyles } from '@material-ui/core/styles'
 import withMobileDialog from '@material-ui/core/withMobileDialog'
 
 import SaveIcon from '@material-ui/icons/Save'
-import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -15,8 +14,6 @@ import FormControl from '@material-ui/core/FormControl'
 import ListItemText from '@material-ui/core/ListItemText'
 import Select from '@material-ui/core/Select'
 import Checkbox from '@material-ui/core/Checkbox'
-import Switch from '@material-ui/core/Switch'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
 
 import FormDialog from '../common/FormDialog'
 import * as actions from '../../actions'
@@ -163,6 +160,15 @@ class BarcosForm extends Component {
           </Select>
         </FormControl>
         <TextField
+          label="Detalhes"
+          marging="normal"
+          fullWidth={fullScreen}
+          className={classNames(classes.formControl, classes.lg)}
+          value={formData.detalhe}
+          onChange={this.handleChange('detalhe')}
+          error={isValueInArray('detalhe', invalidInputIds)}
+        />
+        <TextField
           label="Peso"
           marging="normal"
           fullWidth={fullScreen}
@@ -180,31 +186,6 @@ class BarcosForm extends Component {
           onChange={this.handleChange('cores')}
           error={isValueInArray('cores', invalidInputIds)}
         />
-        <TextField
-          label="Detalhes"
-          marging="normal"
-          fullWidth={fullScreen}
-          className={classNames(classes.formControl, classes.lg)}
-          value={formData.detalhe}
-          onChange={this.handleChange('detalhe')}
-          error={isValueInArray('detalhe', invalidInputIds)}
-        />
-        <FormControl
-          fullWidth={fullScreen}
-          marging="normal"
-          className={classNames(classes.formControl, classes.sm)}
-        >
-          <FormControlLabel
-            label={
-              <Typography variant="subheading" color="textSecondary">
-                Em manutenção?
-              </Typography>
-            }
-            checked={formData.manutencao}
-            onChange={this.handleChange('manutencao', true)}
-            control={<Switch />}
-          />
-        </FormControl>
       </div>
     )
   }

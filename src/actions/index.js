@@ -128,29 +128,3 @@ export const deleteBarco = data => async (dispatch) => {
       })
     })
 }
-
-export const changeServiceBarco = data => async (dispatch) => {
-  dispatch({
-    type: 'REQUEST_CHANGE_SERVICE_BARCO',
-    payload: data,
-  })
-  barcosRef.child(`${data.$id}/manutencao`).set(!data.manutencao)
-    .then(() => {
-      const message = (
-        <span>
-          {helpers.barcoToString(data)}
-          <b>{!data.manutencao ? ' em' : ' fora de'} manutenção</b>
-        </span>
-      )
-      dispatch({
-        type: 'SUCCESS_CHANGE_SERVICE_BARCO',
-        payload: { message },
-      })
-    })
-    .catch((err) => {
-      dispatch({
-        type: 'ERROR_CHANGE_SERVICE_BARCO',
-        payload: err,
-      })
-    })
-}

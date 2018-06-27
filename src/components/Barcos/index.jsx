@@ -4,7 +4,6 @@ import classNames from 'classnames'
 
 import Edit from '@material-ui/icons/Edit'
 import Delete from '@material-ui/icons/Delete'
-import Build from '@material-ui/icons/Build'
 import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
 import { withStyles } from '@material-ui/core/styles'
@@ -56,16 +55,16 @@ class Barcos extends Component {
         valueAdapter: value => helpers.tiposBarcoToString(value),
       },
       {
-        id: 'peso',
-        numeric: false,
-        disablePadding: false,
-        label: 'Peso',
-      },
-      {
         id: 'detalhe',
         numeric: false,
         disablePadding: false,
         label: 'Detalhe',
+      },
+      {
+        id: 'peso',
+        numeric: false,
+        disablePadding: false,
+        label: 'Peso',
       },
       {
         id: 'cores',
@@ -73,21 +72,8 @@ class Barcos extends Component {
         disablePadding: false,
         label: 'Cores',
       },
-      {
-        id: 'manutencao',
-        numeric: false,
-        disablePadding: false,
-        label: 'Em manutenção?',
-        valueAdapter: value => helpers.manutencaoBarcoToString(value),
-      },
     ],
     metaActions: [
-      {
-        id: 'manutencao',
-        label: 'Manutenção',
-        icon: <Build />,
-        onClick: (data) => { this.props.changeServiceBarco(data) },
-      },
       {
         id: 'edit',
         label: 'Editar',
