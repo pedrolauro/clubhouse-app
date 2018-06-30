@@ -28,9 +28,9 @@ export const theme = createMuiTheme({
     drawer: 200,
     logo: 40,
   },
-  unit: {
-    padding: 5,
-  },
+  // unit: {
+  //   padding: 5,
+  // },
 })
 
 export const globalStyles = {

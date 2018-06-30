@@ -12,8 +12,6 @@ import Avatar from '@material-ui/core/Avatar'
 
 import { isValueInArray } from '../../helpers'
 
-// import imgAvatar from '../../images/uxceo-128.jpg'
-
 const styles = theme => ({
   root: {
     // padding: `${theme.spacing.unit * 2}px`,
@@ -58,20 +56,21 @@ const styles = theme => ({
   avatars: {
     display: 'flex',
     flexFlow: 'row-reverse',
-    marginBottom: theme.spacing.unit,
-    marginRight: `${theme.spacing.unit * 3}px`,
+    margin: `${theme.spacing.unit}px ${theme.spacing.unit * 2.5}px ${theme.spacing.unit}px 0`,
   },
   icon: {
     marginLeft: theme.spacing.unit * 2,
   },
   avatar: {
-    border: `2px solid ${theme.palette.common.white}`,
-    width: theme.spacing.unit * 7,
-    height: theme.spacing.unit * 7,
-    marginRight: `-${theme.spacing.unit * 3}px`,
+    border: `2px solid ${theme.palette.secondary.main}`,
+    boxShadow: '0px 2px 3px 0px rgba(0,0,0,0.3)',
+    width: theme.spacing.unit * 6,
+    height: theme.spacing.unit * 6,
+    marginRight: `-${theme.spacing.unit * 2.5}px`,
   },
   notConfirmed: {
-    opacity: '0.3',
+    opacity: '0.35',
+    borderColor: `${theme.palette.common.white}`,
   },
 })
 
