@@ -1,28 +1,26 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
-import HomeIcon from '@material-ui/icons/Home'
 import TimelineIcon from '@material-ui/icons/Timeline'
 import DirectionsBoatIcon from '@material-ui/icons/DirectionsBoat'
 import PeopleIcon from '@material-ui/icons/People'
 
-import Main from './components/Main'
+import Agenda from './components/Agenda'
+import AgendaHeader from './components/Agenda/header'
 import Barcos from './components/Barcos'
 import BarcosHeader from './components/Barcos/header'
 import Atletas from './components/Atletas'
 import Categorias from './components/Categorias'
+import CalendarIcon from './components/icons/Calendar'
+
 
 export default [
   {
-    name: 'Home',
+    name: 'Agenda',
     path: '/',
     exact: true,
-    icon: <HomeIcon />,
-    headerComponent: () => (
-      <Typography variant="title" color="inherit" noWrap>
-        BoatHouse
-      </Typography>
-    ),
-    bodyComponent: () => <Main />,
+    icon: <CalendarIcon />,
+    headerComponent: () => <AgendaHeader />,
+    bodyComponent: () => <Agenda />,
   },
   {
     name: 'Barcos',
