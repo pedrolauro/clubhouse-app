@@ -42,6 +42,12 @@ const styles = theme => ({
       }),
     },
   },
+  bottomRest: {
+    minHeight: `${theme.spacing.unit * 16}px`,
+    [theme.breakpoints.down('sm')]: {
+      minHeight: `${theme.spacing.unit * 11}px`,
+    },
+  },
 })
 
 class Barcos extends Component {
@@ -137,6 +143,7 @@ class Barcos extends Component {
           data={data}
           actions={metaActions}
         />
+        <div className={classes.bottomRest} />
         <ConfirmationDialog
           open={deleteDialogOpened}
           confirmText="Apagar"

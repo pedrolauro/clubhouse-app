@@ -18,7 +18,7 @@ import MenuIcon from '@material-ui/icons/Menu'
 import Snackbar from '@material-ui/core/Snackbar'
 import CloseIcon from '@material-ui/icons/Close'
 
-import Logo from './Logo'
+import Logo from './icons/Logo'
 import * as actions from '../actions'
 
 const styles = theme => ({
@@ -44,12 +44,6 @@ const styles = theme => ({
   },
   space: {
     ...theme.mixins.toolbar,
-  },
-  bottomRest: {
-    minHeight: `${theme.spacing.unit * 16}px`,
-    [theme.breakpoints.down('sm')]: {
-      minHeight: `${theme.spacing.unit * 11}px`,
-    },
   },
   toolbar: {
     ...theme.mixins.toolbar,
@@ -225,7 +219,6 @@ class ResponsiveDrawer extends Component {
               component={route.bodyComponent}
             />
           ))}
-          <div className={classes.bottomRest} />
         </main>
         <Snackbar
           key={snackbarKey}
