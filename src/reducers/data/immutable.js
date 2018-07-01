@@ -87,9 +87,17 @@ const categorias = [
   },
 ]
 
+const calendarRestrictions = {
+  initialTime: '06:00',
+  endTime: '18:00',
+  timeInterval: 15,
+  markerInterval: 5,
+}
+
 const initialData = {
   tiposBarcos,
   categorias,
+  calendarRestrictions,
 }
 
 export default (state = initialData) => state

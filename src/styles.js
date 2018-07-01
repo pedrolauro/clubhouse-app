@@ -27,11 +27,9 @@ export const theme = createMuiTheme({
   sizes: {
     drawer: 200,
     logo: 40,
-    minuteInterval: 10,
+    minuteStep: 20,
+    calendarAvatar: 48,
   },
-  // unit: {
-  //   padding: 5,
-  // },
 })
 
 export const globalStyles = {

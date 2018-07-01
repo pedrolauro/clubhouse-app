@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react'
 import classNames from 'classnames'
 
@@ -14,7 +13,8 @@ import { isValueInArray } from '../../helpers'
 
 const styles = theme => ({
   card: {
-    // margin: `${theme.spacing.unit * 2}px`,
+    position: 'absolute',
+    width: '100%',
   },
   content: {
     height: '100%',
@@ -22,11 +22,8 @@ const styles = theme => ({
     flexFlow: 'column',
     justifyContent: 'space-between',
     '&:last-child': {
-      padding: `${theme.spacing.unit * 2}px`,
+      padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
     },
-  },
-  sm: {
-    height: `${theme.spacing.unit * 32}px`,
   },
   header: {
     display: 'flex',
@@ -53,7 +50,7 @@ const styles = theme => ({
   avatars: {
     display: 'flex',
     flexFlow: 'row-reverse',
-    margin: `${theme.spacing.unit}px ${theme.spacing.unit * 2.5}px ${theme.spacing.unit}px 0`,
+    margin: `${theme.spacing.unit}px 0 ${theme.spacing.unit}px 0`,
   },
   icon: {
     marginLeft: theme.spacing.unit * 2,
@@ -61,9 +58,8 @@ const styles = theme => ({
   avatar: {
     border: `2px solid ${theme.palette.secondary.main}`,
     boxShadow: '0px 2px 3px 0px rgba(0,0,0,0.3)',
-    width: theme.spacing.unit * 6,
-    height: theme.spacing.unit * 6,
-    marginRight: `-${theme.spacing.unit * 2.5}px`,
+    width: theme.sizes.calendarAvatar,
+    height: theme.sizes.calendarAvatar,
   },
   notConfirmed: {
     opacity: '0.35',
@@ -72,17 +68,42 @@ const styles = theme => ({
 })
 
 class AgendaCard extends Component {
-  renderAvatar = ({
-    classes,
-    confirmed,
-    imgAvatar,
-    key,
-  }) => {
+  constructor(props) {
+    super(props)
+    this.state = {
+      avatarsContainerWidth: null,
+    }
+  }
+
+  componentDidMount() {
+    const el = document.getElementById('avatars-container')
+    /* eslint-disable react/no-did-mount-set-state */
+    this.setState({ avatarsContainerWidth: el.offsetWidth })
+  }
+
+  calcAvatarSpacing = (avatarsCount) => {
+    const { theme } = this.props
+    const { avatarsContainerWidth } = this.state
+    let spacing = theme.sizes.calendarAvatar * avatarsCount
+    spacing -= avatarsContainerWidth
+    spacing /= (avatarsCount - 1)
+    if (!spacing) {
+      spacing = theme.sizes.calendarAvatar
+    }
+    return Math.ceil(spacing)
+  }
+
+  renderAvatar = ({ confirmed, imgAvatar, key }) => {
+    const { classes } = this.props
+    const style = { marginRight: `-${this.calcAvatarSpacing(8)}px` }
+
     const classesAvatar = confirmed ?
       classNames(classes.notConfirmed, classes.avatar) : classes.avatar
+
     return (
       <Avatar
         key={key}
+        style={style}
         alt="Adelle Charles"
         src={imgAvatar}
         className={classesAvatar}
@@ -92,7 +113,7 @@ class AgendaCard extends Component {
 
   renderRowers = ({ classes }) => {
     const ids = []
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 8; i++) {
       let unique = false
       let idAvatar
       while (!unique) {
@@ -109,22 +130,34 @@ class AgendaCard extends Component {
     return (
       ids.map(id => this.renderAvatar({
         classes,
+        key: id,
         confirmed: qtde++ < 4,
         /* eslint-disable import/no-dynamic-require */
         /* eslint-disable global-require */
         imgAvatar: require(`../../images/${id}.jpg`),
-        key: id,
       }))
     )
   }
 
   render() {
     const {
+      theme,
       classes,
+      position,
+      duration,
     } = this.props
 
+    const avatarsStyle = { marginRight: `${this.calcAvatarSpacing(8)}px` }
+    const cardStyle = {
+      height: `${theme.sizes.minuteStep * duration}px`,
+      top: `${theme.sizes.minuteStep * position}px`,
+    }
+
     return (
-      <Card className={classNames(classes.card, classes.sm)}>
+      <Card
+        style={cardStyle}
+        className={classes.card}
+      >
         <CardContent className={classes.content}>
           <div className={classes.header}>
             <Typography color="textSecondary" variant="caption">
@@ -135,8 +168,14 @@ class AgendaCard extends Component {
             </Typography>
           </div>
 
-          <div className={classes.middle}>
-            <div className={classes.avatars}>
+          <div
+            id="avatars-container"
+            className={classes.middle}
+          >
+            <div
+              className={classes.avatars}
+              style={avatarsStyle}
+            >
               {this.renderRowers({ classes })}
             </div>
             <Typography variant="subheading" color="textSecondary">

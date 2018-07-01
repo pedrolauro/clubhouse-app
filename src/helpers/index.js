@@ -18,14 +18,20 @@ export const isValueInArray = (value, array) => !array || array.indexOf(value) >
 
 export const isStrInBetween = (str, min, max) => str && str.length >= min && str.length <= max
 
-export const getTimingInterval = (iniTime, endTime, interval) => {
+export const getTimingInterval = (iniTime, endTime, markerInterval, timeInterval) => {
   let step = moment(iniTime, 'HH:mm')
   const end = moment(endTime, 'HH:mm')
-  const timings = [step]
+  let nextTime = step.clone().add(timeInterval, 'minutes')
+  const timings = [{ key: step.format('HH:mm'), time: true }]
   while (end.diff(step) > 0) {
-    step = step.clone().add(interval, 'minutes')
-    timings.push(step)
+    step = step.clone().add(markerInterval, 'minutes')
+    let time = false
+    if (step.diff(nextTime) === 0) {
+      time = true
+      nextTime = step.clone().add(timeInterval, 'minutes')
+    }
+    timings.push({ key: step.format('HH:mm'), time })
   }
 
-  return timings.map(time => time.format('HH:mm'))
+  return timings
 }

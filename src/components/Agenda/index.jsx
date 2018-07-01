@@ -12,7 +12,8 @@ import AgendaCard from './card'
 
 const styles = theme => ({
   root: {
-    padding: `${theme.spacing.unit}px`,
+    margin: `${theme.spacing.unit}px`,
+    marginRight: `${theme.spacing.unit * 2}px`,
     display: 'flex',
     height: '100%',
     flexFlow: 'row',
@@ -24,82 +25,69 @@ const styles = theme => ({
     display: 'flex',
     height: '100%',
     flexFlow: 'column',
-    marginRight: `${theme.spacing.unit}px`,
-  },
-  markers: {
-    display: 'flex',
-    height: '100%',
-    flexFlow: 'column',
-    marginRight: `${theme.spacing.unit}px`,
+    marginRight: `${theme.spacing.unit * 2}px`,
   },
   timeStep: {
-    marginBottom: `${theme.spacing.unit * 6}px`,
-    '&:last-of-type': {
-      marginBottom: '0',
-    },
+    display: 'flex',
+    flexFlow: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-end',
+    height: `${theme.sizes.minuteStep}px`,
   },
   marker: {
-    marginBottom: `${theme.spacing.unit}px`,
-    '&:last-of-type': {
-      marginBottom: '0',
-    },
+    marginLeft: `${theme.spacing.unit}px`,
   },
   cards: {
-    margin: `${theme.spacing.unit}px`,
-    marginTop: `calc(${theme.spacing.unit}px - 1px)`,
-    // display: 'flex',
-    // height: '100%',
-    // flexFlow: 'column',
+    position: 'relative',
+    marginTop: `${theme.spacing.unit}px`,
     flex: '1 0',
-  },
-  card: {
-    marginBottom: `${theme.spacing.unit * 2}px`,
-    '&:last-of-type': {
-      marginBottom: '0',
-    },
   },
 })
 
 class Agenda extends Component {
-  renderMarkers = (markers) => {
-    const { classes } = this.props
-    return markers.map(marker => (
-      <Typography
-        key={marker}
-        color="textSecondary"
-        variant="caption"
-        className={classes.marker}
-      >
-        -
-      </Typography>
-    ))
-  }
-
   renderTimings = (timings) => {
     const { classes } = this.props
-    return timings.map(time => (
-      <Typography
-        key={time}
-        color="textSecondary"
-        variant="caption"
-        className={classes.timeStep}
-      >
-        {time}
-      </Typography>
-    ))
+    return timings.map((timing) => {
+      const { key, time } = timing
+      return (
+        <div key={key} className={classes.timeStep}>
+          {!time ? '' : (
+            <Typography
+              color="textSecondary"
+              variant="caption"
+            >
+              {key}
+            </Typography>
+          )}
+          <Typography
+            color="textSecondary"
+            variant="caption"
+            className={classes.marker}
+          >
+            -
+          </Typography>
+        </div>
+      )
+    })
   }
 
   render() {
     const {
       classes,
+      calendarRestrictions: {
+        initialTime,
+        endTime,
+        timeInterval,
+        markerInterval,
+      },
     } = this.props
 
-    const initialTime = '06:00'
-    const endTime = '18:00'
-    const intervalMinutes = 15
-    const intervalMarkers = 5
-    const timings = getTimingInterval(initialTime, endTime, intervalMinutes)
-    const markers = getTimingInterval(initialTime, endTime, intervalMarkers)
+    const timings = getTimingInterval(initialTime, endTime, markerInterval, timeInterval)
+
+    const position1 = 30 / markerInterval
+    const duration1 = 60 / markerInterval
+    const position2 = 120 / markerInterval
+    const duration2 = 30 / markerInterval
 
     return (
       <div>
@@ -108,16 +96,17 @@ class Agenda extends Component {
           <div className={classes.timings}>
             {this.renderTimings(timings)}
           </div>
-          <div className={classes.markers}>
-            {this.renderMarkers(markers)}
-          </div>
           <div className={classes.cards}>
-            <AgendaCard className={classes.card} />
-            <AgendaCard className={classes.card} />
-            <AgendaCard className={classes.card} />
-            <AgendaCard className={classes.card} />
-            <AgendaCard className={classes.card} />
-            <AgendaCard className={classes.card} />
+            <AgendaCard
+              className={classes.card}
+              position={position1}
+              duration={duration1}
+            />
+            <AgendaCard
+              className={classes.card}
+              position={position2}
+              duration={duration2}
+            />
           </div>
         </div>
       </div>
@@ -126,9 +115,8 @@ class Agenda extends Component {
 }
 
 const mapStateToProps = ({ data, controller }) => ({
-  data: data.barcos,
+  calendarRestrictions: data.immutable.calendarRestrictions,
   snackbarOpen: controller.snackbar.open,
-  deleteDialogController: controller.barcos.deleteDialog,
 })
 
 export default connect(mapStateToProps, actions)(withStyles(styles, { withTheme: true })(Agenda))
