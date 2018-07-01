@@ -1,5 +1,6 @@
 const initialState = {
   barcoSelected: { $id: '' },
+  dateSelected: new Date(),
 }
 
 const agendaReducer = (state = initialState, { type, payload }) => {
@@ -20,6 +21,12 @@ const agendaReducer = (state = initialState, { type, payload }) => {
         }
       }
       return state
+
+    case 'FILTER_DATE_AGENDA':
+      return {
+        ...state,
+        dateSelected: payload,
+      }
 
     default:
       return state

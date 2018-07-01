@@ -19,10 +19,11 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 
 // material ui picker
-import DateFnsUtils from 'material-ui-pickers/utils/date-fns-utils'
+import ptLocale from 'date-fns/locale/pt'
 import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider'
 
 import App from './components/App'
+import LocalizedDatePickerUtils from './config/LocalizedDatePickerUtils'
 import routes from './routes'
 import reducers from './reducers'
 import { theme, globalStyles } from './styles'
@@ -43,7 +44,7 @@ ReactDOM.render(
     <ConnectedRouter history={history}>
       <MuiThemeProvider theme={theme}>
         <CssBaseline>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <MuiPickersUtilsProvider utils={LocalizedDatePickerUtils} locale={ptLocale}>
             <App routes={routes} />
           </MuiPickersUtilsProvider>
         </CssBaseline>

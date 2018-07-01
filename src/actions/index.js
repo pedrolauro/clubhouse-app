@@ -133,3 +133,8 @@ export const filterBarcoAgenda = data => ({
   type: 'FILTER_BARCO_AGENDA',
   payload: data,
 })
+
+export const filterDateAgenda = data => ({
+  type: 'FILTER_DATE_AGENDA',
+  payload: data,
+})

@@ -7,6 +7,9 @@ import { withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
+import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft'
+import DatePicker from 'material-ui-pickers/DatePicker'
 
 import * as actions from '../../actions'
 import { getTimingInterval } from '../../helpers'
@@ -80,6 +83,10 @@ const styles = theme => ({
 })
 
 class Agenda extends Component {
+  handleDateChange = (date) => {
+    this.props.filterDateAgenda(date)
+  }
+
   renderTimings = (timings) => {
     const { classes } = this.props
     return timings.map((timing) => {
@@ -109,6 +116,7 @@ class Agenda extends Component {
   render() {
     const {
       classes,
+      dateSelected,
       snackbarOpen,
       calendarConfigurations: {
         initialTime,
@@ -135,6 +143,24 @@ class Agenda extends Component {
     return (
       <div>
         {/* <div className={classes.space} /> */}
+        <DatePicker
+          autoOk
+          disableOpenOnEnter
+          showTodayButton
+          allowKeyboardControl={false}
+          format="ddd [-] DD/MM/YYYY"
+          cancelLabel="Cancelar"
+          todayLabel="Hoje"
+          minDateMessage="Essa data não está mais disponível para visualização"
+          maxDateMessage="Essa data ainda não foi aberta para reservas"
+          minDate="2018-06-25"
+          maxDate="2018-07-10"
+          shouldDisableDate={() => Math.random() <= 0.5}
+          leftArrowIcon={(<KeyboardArrowLeftIcon />)}
+          rightArrowIcon={(<KeyboardArrowRightIcon />)}
+          value={dateSelected}
+          onChange={this.handleDateChange}
+        />
         <div className={classes.root}>
           <div className={classes.timings}>
             {this.renderTimings(timings)}
@@ -178,6 +204,7 @@ class Agenda extends Component {
 const mapStateToProps = ({ data, controller }) => ({
   calendarConfigurations: data.immutable.calendarConfigurations,
   snackbarOpen: controller.snackbar.open,
+  dateSelected: controller.agenda.dateSelected,
 })
 
 export default connect(mapStateToProps, actions)(withStyles(styles, { withTheme: true })(Agenda))
