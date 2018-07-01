@@ -128,3 +128,8 @@ export const deleteBarco = data => async (dispatch) => {
       })
     })
 }
+
+export const filterBarcoAgenda = data => ({
+  type: 'FILTER_BARCO_AGENDA',
+  payload: data,
+})

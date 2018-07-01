@@ -4,6 +4,8 @@ export const tiposBarcoToString = (tiposBarcos = []) => tiposBarcos.sort().join(
 
 export const barcoToString = (barco = {}) => `${tiposBarcoToString(barco.tipos) || ''} ${barco.peso || ''}`
 
+export const barcoToStringDetails = (barco = {}) => `${barco.detalhe || ''} ${barco.cores || ''}`
+
 export const convertFirebaseMacro = (macro) => {
   const list = []
   if (macro) {
