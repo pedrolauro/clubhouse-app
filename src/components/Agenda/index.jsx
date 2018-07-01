@@ -15,8 +15,7 @@ import AgendaCard from './card'
 
 const styles = theme => ({
   root: {
-    margin: `${theme.spacing.unit}px`,
-    marginRight: `${theme.spacing.unit * 2}px`,
+    margin: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 2}px 0 ${theme.spacing.unit}px`,
     display: 'flex',
     height: '100%',
     flexFlow: 'row',
@@ -135,7 +134,7 @@ class Agenda extends Component {
 
     return (
       <div>
-        <div className={classes.space} />
+        {/* <div className={classes.space} /> */}
         <div className={classes.root}>
           <div className={classes.timings}>
             {this.renderTimings(timings)}

@@ -89,7 +89,7 @@ const categorias = [
 
 const calendarConfigurations = {
   initialTime: '06:00',
-  endTime: '18:00',
+  endTime: '19:00',
   timeInterval: 15,
   markerInterval: 5,
 }

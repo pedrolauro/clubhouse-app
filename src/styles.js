@@ -27,7 +27,7 @@ export const theme = createMuiTheme({
   sizes: {
     drawer: 200,
     logo: 40,
-    markerStep: 20,
+    markerStep: 22,
     calendarAvatar: 48,
   },
 })

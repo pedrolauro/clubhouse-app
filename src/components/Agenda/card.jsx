@@ -5,10 +5,10 @@ import { withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
-import TimelineIcon from '@material-ui/icons/Timeline'
-import DirectionsBoatIcon from '@material-ui/icons/DirectionsBoat'
+import BuildIcon from '@material-ui/icons/Build'
 import Avatar from '@material-ui/core/Avatar'
 
+import CalendarClockIcon from '../icons/CalendarClock'
 import { isValueInArray } from '../../helpers'
 
 const styles = theme => ({
@@ -56,7 +56,7 @@ const styles = theme => ({
     margin: `${theme.spacing.unit}px 0 ${theme.spacing.unit}px 0`,
   },
   icon: {
-    marginLeft: theme.spacing.unit * 2,
+    marginLeft: theme.spacing.unit,
   },
   avatar: {
     border: `2px solid ${theme.palette.secondary.main}`,
@@ -163,7 +163,7 @@ class AgendaCard extends Component {
         >
           {this.renderRowers({ classes })}
         </div>
-        <Typography variant="caption" color="textSecondary">
+        <Typography variant="body2" color="textSecondary">
           4/8 confirmados
         </Typography>
       </div>
@@ -175,9 +175,9 @@ class AgendaCard extends Component {
     return (
       <div className={classes.footerText}>
         <Typography color="textSecondary" variant="caption">
-          Reservado até
+          Reserva até
         </Typography>
-        <Typography variant="body2">
+        <Typography variant="body1">
           26/07 - 18:30
         </Typography>
       </div>
@@ -221,8 +221,14 @@ class AgendaCard extends Component {
             {smallCard ? this.renderMiddleSection(smallCard) : ''}
 
             <div className={classes.footerIcons}>
-              <TimelineIcon className={classes.icon} color="disabled" />
-              <DirectionsBoatIcon className={classes.icon} />
+              <BuildIcon
+                color="primary"
+                className={classes.icon}
+              />
+              <CalendarClockIcon
+                color="primary"
+                className={classes.icon}
+              />
             </div>
           </div>
 

@@ -15,6 +15,7 @@ import jss from 'jss'
 import preset from 'jss-preset-default'
 
 // material ui
+import 'typeface-roboto'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 
