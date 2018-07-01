@@ -1,7 +1,9 @@
+import { orderData } from '../../helpers'
+
 const barcosReducer = (state = [], { type, payload }) => {
   switch (type) {
     case 'FETCH_BARCOS':
-      return payload
+      return orderData({ data: payload, orderBy: 'tipos' })
 
     default:
       return state

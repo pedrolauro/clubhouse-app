@@ -42,17 +42,6 @@ const styles = theme => ({
   },
 })
 
-const ITEM_HEIGHT = 48
-const ITEM_PADDING_TOP = 8
-const TiposBarcosMenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: (ITEM_HEIGHT * 4.5) + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-}
-
 class BarcosForm extends Component {
   state = {
     formData: { ...this.props.controller.target },
@@ -132,7 +121,21 @@ class BarcosForm extends Component {
 
   renderForm = () => {
     const { formData, invalidInputIds } = this.state
-    const { fullScreen, classes, tiposBarcos } = this.props
+    const {
+      classes,
+      theme,
+      fullScreen,
+      tiposBarcos,
+    } = this.props
+
+    const TiposBarcosMenuProps = {
+      PaperProps: {
+        style: {
+          maxHeight: (theme.spacing.unit * 25),
+          width: 250,
+        },
+      },
+    }
 
     return (
       <div className={classes.root}>

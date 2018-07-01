@@ -18,6 +18,8 @@ import Hidden from '@material-ui/core/Hidden'
 import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
 
+import { orderData } from '../../helpers'
+
 const styles = theme => ({
   table: {
     [theme.breakpoints.down('sm')]: {
@@ -64,19 +66,6 @@ const styles = theme => ({
     },
   },
 })
-
-const orderData = ({ data, order, orderBy }) => {
-  if (!data || data.length === 0) {
-    return []
-  }
-  if (!order || !orderBy) {
-    return data
-  }
-
-  return order === 'desc'
-    ? [...data].sort((a, b) => (b[orderBy] < a[orderBy] ? -1 : 1))
-    : [...data].sort((a, b) => (a[orderBy] < b[orderBy] ? -1 : 1))
-}
 
 class EnhancedTable extends Component {
   state = {

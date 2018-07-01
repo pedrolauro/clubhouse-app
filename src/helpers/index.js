@@ -35,3 +35,16 @@ export const getTimingInterval = (iniTime, endTime, markerInterval, timeInterval
 
   return timings
 }
+
+export const orderData = ({ data, order, orderBy }) => {
+  if (!data || data.length === 0) {
+    return []
+  }
+  if (!orderBy) {
+    return data
+  }
+
+  return order === 'desc'
+    ? [...data].sort((a, b) => (b[orderBy] < a[orderBy] ? -1 : 1))
+    : [...data].sort((a, b) => (a[orderBy] < b[orderBy] ? -1 : 1))
+}
