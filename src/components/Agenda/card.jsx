@@ -47,6 +47,9 @@ const styles = theme => ({
     flexFlow: 'column',
     alignItems: 'center',
   },
+  smallCardMiddle: {
+    flex: '1 0',
+  },
   avatars: {
     display: 'flex',
     flexFlow: 'row-reverse',
@@ -76,7 +79,8 @@ class AgendaCard extends Component {
   }
 
   componentDidMount() {
-    const el = document.getElementById('avatars-container')
+    const { chave } = this.props
+    const el = document.getElementById(`avatars-container-${chave}`)
     /* eslint-disable react/no-did-mount-set-state */
     this.setState({ avatarsContainerWidth: el.offsetWidth })
   }
@@ -93,7 +97,7 @@ class AgendaCard extends Component {
     return Math.ceil(spacing)
   }
 
-  renderAvatar = ({ confirmed, imgAvatar, key }) => {
+  renderAvatar = ({ confirmed, imgAvatar, avatarKey }) => {
     const { classes } = this.props
     const style = { marginRight: `-${this.calcAvatarSpacing(8)}px` }
 
@@ -102,7 +106,7 @@ class AgendaCard extends Component {
 
     return (
       <Avatar
-        key={key}
+        key={avatarKey}
         style={style}
         alt="Adelle Charles"
         src={imgAvatar}
@@ -130,12 +134,53 @@ class AgendaCard extends Component {
     return (
       ids.map(id => this.renderAvatar({
         classes,
-        key: id,
+        avatarKey: id,
         confirmed: qtde++ < 4,
         /* eslint-disable import/no-dynamic-require */
         /* eslint-disable global-require */
         imgAvatar: require(`../../images/${id}.jpg`),
       }))
+    )
+  }
+
+  renderMiddleSection = (smallCard) => {
+    const { classes, chave } = this.props
+    const avatarsStyle = { marginRight: `${this.calcAvatarSpacing(8)}px` }
+
+    const middleClassName = classNames(
+      classes.middle,
+      smallCard ? classes.smallCardMiddle : null,
+    )
+
+    return (
+      <div
+        id={`avatars-container-${chave}`}
+        className={middleClassName}
+      >
+        <div
+          className={classes.avatars}
+          style={avatarsStyle}
+        >
+          {this.renderRowers({ classes })}
+        </div>
+        <Typography variant="caption" color="textSecondary">
+          4/8 confirmados
+        </Typography>
+      </div>
+    )
+  }
+
+  renderFooterText = () => {
+    const { classes } = this.props
+    return (
+      <div className={classes.footerText}>
+        <Typography color="textSecondary" variant="caption">
+          Reservado até
+        </Typography>
+        <Typography variant="body2">
+          26/07 - 18:30
+        </Typography>
+      </div>
     )
   }
 
@@ -147,10 +192,11 @@ class AgendaCard extends Component {
       duration,
     } = this.props
 
-    const avatarsStyle = { marginRight: `${this.calcAvatarSpacing(8)}px` }
+    const smallCard = duration < 9
+
     const cardStyle = {
-      height: `${theme.sizes.minuteStep * duration}px`,
-      top: `${theme.sizes.minuteStep * position}px`,
+      height: `${theme.sizes.markerStep * duration}px`,
+      top: `${theme.sizes.markerStep * position}px`,
     }
 
     return (
@@ -168,30 +214,12 @@ class AgendaCard extends Component {
             </Typography>
           </div>
 
-          <div
-            id="avatars-container"
-            className={classes.middle}
-          >
-            <div
-              className={classes.avatars}
-              style={avatarsStyle}
-            >
-              {this.renderRowers({ classes })}
-            </div>
-            <Typography variant="subheading" color="textSecondary">
-              4/8 confirmados
-            </Typography>
-          </div>
+          {!smallCard ? this.renderMiddleSection(smallCard) : ''}
 
           <div className={classes.footer}>
-            <div className={classes.footerText}>
-              <Typography color="textSecondary" variant="caption">
-                Reservado até
-              </Typography>
-              <Typography variant="body2">
-                26/07 - 18:30
-              </Typography>
-            </div>
+            {!smallCard ? this.renderFooterText() : ''}
+            {smallCard ? this.renderMiddleSection(smallCard) : ''}
+
             <div className={classes.footerIcons}>
               <TimelineIcon className={classes.icon} color="disabled" />
               <DirectionsBoatIcon className={classes.icon} />

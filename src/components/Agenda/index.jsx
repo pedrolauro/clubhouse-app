@@ -35,7 +35,7 @@ const styles = theme => ({
     flexFlow: 'row',
     alignItems: 'flex-start',
     justifyContent: 'flex-end',
-    height: `${theme.sizes.minuteStep}px`,
+    height: `${theme.sizes.markerStep}px`,
   },
   marker: {
     marginLeft: `${theme.spacing.unit}px`,
@@ -111,7 +111,7 @@ class Agenda extends Component {
     const {
       classes,
       snackbarOpen,
-      calendarRestrictions: {
+      calendarConfigurations: {
         initialTime,
         endTime,
         timeInterval,
@@ -142,16 +142,19 @@ class Agenda extends Component {
           </div>
           <div className={classes.cards}>
             <AgendaCard
+              chave="1"
               className={classes.card}
               position={position1}
               duration={duration1}
             />
             <AgendaCard
+              chave="2"
               className={classes.card}
               position={position2}
               duration={duration2}
             />
             <AgendaCard
+              chave="3"
               className={classes.card}
               position={position3}
               duration={duration3}
@@ -174,7 +177,7 @@ class Agenda extends Component {
 }
 
 const mapStateToProps = ({ data, controller }) => ({
-  calendarRestrictions: data.immutable.calendarRestrictions,
+  calendarConfigurations: data.immutable.calendarConfigurations,
   snackbarOpen: controller.snackbar.open,
 })
 
