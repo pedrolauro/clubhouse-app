@@ -1,4 +1,4 @@
-import moment from 'moment'
+import { parse, addMinutes, format, differenceInMilliseconds } from 'date-fns'
 
 export const tiposBarcoToString = (tiposBarcos = []) => tiposBarcos.sort().join('/')
 
@@ -21,18 +21,19 @@ export const isValueInArray = (value, array) => !array || array.indexOf(value) >
 export const isStrInBetween = (str, min, max) => str && str.length >= min && str.length <= max
 
 export const getTimingInterval = (iniTime, endTime, markerInterval, timeInterval) => {
-  let step = moment(iniTime, 'HH:mm')
-  const end = moment(endTime, 'HH:mm')
-  let nextTime = step.clone().add(timeInterval, 'minutes')
-  const timings = [{ key: step.format('HH:mm'), time: true }]
-  while (end.diff(step) > 0) {
-    step = step.clone().add(markerInterval, 'minutes')
+  let step = parse(iniTime, 'HH:mm', new Date())
+  const end = parse(endTime, 'HH:mm', new Date())
+  let nextTime = addMinutes(step, timeInterval)
+  const timings = [{ key: format(step, 'HH:mm'), time: true }]
+
+  while (differenceInMilliseconds(end, step) > 0) {
+    step = addMinutes(step, markerInterval)
     let time = false
-    if (step.diff(nextTime) === 0) {
+    if (differenceInMilliseconds(step, nextTime) === 0) {
       time = true
-      nextTime = step.clone().add(timeInterval, 'minutes')
+      nextTime = addMinutes(step, timeInterval)
     }
-    timings.push({ key: step.format('HH:mm'), time })
+    timings.push({ key: format(step, 'HH:mm'), time })
   }
 
   return timings
