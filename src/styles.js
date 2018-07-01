@@ -27,6 +27,7 @@ export const theme = createMuiTheme({
   sizes: {
     drawer: 200,
     logo: 40,
+    minuteInterval: 10,
   },
   // unit: {
   //   padding: 5,
